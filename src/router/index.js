@@ -1,14 +1,39 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Index from '../views/home/index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Index',
+    component: Index
+  },
+  {
+    path: '/freely-combine',  // 自如寓
+    name: 'Index',
+    component: () => import('../views/freelyCombine/index.vue')
+  },
+  {
+    path: '/service',  // 服务
+    name: 'Index',
+    component: () => import('../views/service/index.vue')
+  },
+  {
+    path: '/qi-yue-will',  // 企悦会
+    name: 'Index',
+    component: () => import('../views/QiYueWill/index.vue')
+  },
+  {
+    path: '/join-us',  // 加入我们
+    name: 'Index',
+    component: () => import('../views/joinUs/index.vue')
+  },
+  {
+    path: '/download-app',  // APP下载
+    name: 'Index',
+    component: () => import('../views/downloadApp/index.vue')
   },
   {
     path: '/about',
