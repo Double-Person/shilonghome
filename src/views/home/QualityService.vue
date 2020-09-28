@@ -4,32 +4,48 @@
     <div class="fl jc-between">
       <div class="left-meau">
         <div class="fl jc-between left-top">
-          <div class="left-meau-left">
-            <div class="item is-active">服务一</div>
-            <div class="item">服务二</div>
-            <div class="item">服务三</div>
+          <div class="left-meau-left" v-for="(item, index) in category" :key="item.id">
+            <div class="item" :class="{'is-active': active == index}">{{item.name}}</div>
           </div>
           <div class="left-meau-scrool"></div>
         </div>
 
-        <div class="title">图文介绍标题</div>
-        <div class="sub-title">图文副标题文字</div>
+        <div class="title">{{category[active].title}}</div>
+        <div class="sub-title">{{category[active].subtitle}}</div>
       </div>
       <div class="right-img">
         <img
-          src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
+          :src="$baseUrl + category[active].image"
           alt=""
         />
       </div>
     </div>
 
-    <div class="content">
-      文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
-      文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
-      文字文字文字文字文字文字文字文字文字文字
-    </div>
+    <div class="content">{{category[active].detail}}</div>
   </div>
 </template>
+
+<script>
+import { homeCategory } from "@/api/api.js";
+export default {
+  data() {
+    return {
+      category: [],
+      active:0
+    };
+  },
+  created() {
+    this.getHomeCategory();
+  },
+  methods: {
+    // 优质服务
+    async getHomeCategory() {
+      let { data } = await homeCategory();
+      this.category = data;
+    },
+  },
+};
+</script>
 
 <style lang="less" scoped>
 @import "~@/assets/style/variable.less";

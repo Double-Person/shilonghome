@@ -1,11 +1,8 @@
 <template>
   <div class="home">
     <el-carousel height="560px" :interval="4000">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <img
-          src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-          alt=""
-        />
+      <el-carousel-item v-for="item in bannerList" :key="item.id">
+        <img :src="$baseUrl + item.image" alt="" />
       </el-carousel-item>
     </el-carousel>
 
@@ -43,17 +40,40 @@
 </template>
 
 <script>
+import { homeIndex, homeService } from "@/api/api.js";
 import VideoItem from "@/views/home/VideoItem";
 import QualityService from "@/views/home/QualityService";
 import QualityCase from "@/views/home/QualityCase";
-import News from '@/views/home/News'
+import News from "@/views/home/News";
 export default {
-  name:'Index',
+  name: "Index",
   components: {
     VideoItem,
     QualityService,
     QualityCase,
-    News
+    News,
+  },
+  data() {
+    return {
+      bannerList: [],
+    };
+  },
+  created() {
+    this.getHomeIndex();
+    this.getHomeService();
+  },
+  methods: {
+    // 轮播
+    async getHomeIndex() {
+      let { data } = await homeIndex();
+      this.bannerList = data;
+    },
+    // 服务项目
+    async getHomeService() {
+      let { data } = await homeService();
+      console.log(data);
+      //  this.bannerList = data
+    },
   },
 };
 </script>
