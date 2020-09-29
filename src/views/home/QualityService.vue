@@ -62,7 +62,7 @@ export default {
   .left-meau {
     .left-top {
       height: 381px;
-      overflow-y: auto;
+      overflow-y: hidden;
       .left-meau-left {
         .item {
           font-size: 26px;

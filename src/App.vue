@@ -20,12 +20,23 @@
           @select="handleSelect"
         >
           <el-menu-item index="/"><div>首页</div></el-menu-item>
-          <el-menu-item index="/freely-combine"><div>世隆房管</div></el-menu-item>
+          <el-menu-item index="/freely-combine"
+            ><div>世隆房管</div></el-menu-item
+          >
           <el-menu-item index="/service"><div>服务</div></el-menu-item>
           <el-menu-item index="/qi-yue-will"><div>企悦会</div> </el-menu-item>
           <el-menu-item index="/join-us"> <div>加入我们</div> </el-menu-item>
+
           <el-menu-item index="/download-app">
-            <div>APP下载</div>
+            <el-popover placement="bottom" trigger="hover" popper-class="popover-warp">
+              <div class="fl">
+                <div v-for="item in codes" :key="item.id" class="for-codes">
+                  <img :src="$baseUrl + item.image" alt="" class="code-img" />
+                  <div class="code-title">{{ item.title }}</div>
+                </div>
+              </div>
+              <div slot="reference">APP下载</div>
+            </el-popover>
           </el-menu-item>
         </el-menu>
       </div>
@@ -35,16 +46,27 @@
 </template>
 
 <script>
+import { appCode } from "@/api/api.js";
 export default {
   data() {
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
+      activeIndex: "/",
+      codes: [],
     };
+  },
+
+  created() {
+    this.getCode();
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    // 二维码
+    async getCode() {
+      let { data } = await appCode();
+      this.codes = data;
+      console.log(data);
     },
   },
 };
@@ -54,6 +76,23 @@ export default {
 @import "~@/assets/style/variable.less";
 @import "~@/assets/style/common.less";
 @import "~@/assets/style/reset.css";
+.popover-warp{
+  padding: 30px !important;
+.for-codes{
+  text-align: center;
+.code-img {
+  width: 137px;
+  height: 137px;
+}
+.code-title {
+  font-size: 18px;
+  color: #646464;
+  margin-top: 37px;
+}
+}
+}
+
+
 #nav {
   height: 60px;
   width: 100%;

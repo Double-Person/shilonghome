@@ -122,6 +122,6 @@
 
     .bg-img {
         background-image: url("~@/assets/img/index-bgc.png");
-        background-size: 1437;
+        background-size: 93%;
     }
 </style>
