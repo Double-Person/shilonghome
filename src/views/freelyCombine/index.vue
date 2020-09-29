@@ -1,14 +1,29 @@
 <template>
-  <div>
-    <img
-      src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-      alt=""
-    />
-  </div>
+  <el-carousel height="560px" :interval="4000">
+    <el-carousel-item v-for="item in list" :key="item.id">
+      <img :src="$baseUrl + item.image" alt="" class="cover-img"/>
+    </el-carousel-item>
+  </el-carousel>
 </template>
 
-<style lang="less" scoped>
-img{
-  width: 100%;
-}
-</style>
+
+<script>
+  import { freelyBanner } from "@/api/api.js";
+  export default {
+    data() {
+      return {
+        list: [],
+      };
+    },
+    created() {
+      this.getList();
+    },
+    methods: {
+      async getList() {
+        let { data } = await freelyBanner();
+        this.list = data;
+      },
+
+    },
+  };
+</script>

@@ -1,10 +1,10 @@
 <template>
   <div class="index">
-    <img
-      src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-      class="banner"
-      alt=""
-    />
+    <el-carousel height="560px" :interval="4000">
+      <el-carousel-item v-for="item in list" :key="item.id">
+        <img :src="$baseUrl + item.image" alt="" class="cover-img"/>
+      </el-carousel-item>
+    </el-carousel>
 
     <div class="my-project">
       <div class="bg-img">
@@ -32,20 +32,20 @@
       <ul class="timer">
         <li
           class="fl jc-center"
-          v-for="(item, index) in activities"
-          :key="index"
+          v-for="(item, index) in group"
+          :key="index.id"
         >
           <div class="content left">
-            <h3 class="timestamp">{{ item.timestamp }}</h3>
-            <div class="text">{{ item.content }}</div>
+            <h3 class="timestamp">{{ item.creatime }}</h3>
+            <div class="text">{{ item.title }}</div>
           </div>
           <div class="line-circle">
             <img src="~@/assets/img/time-circle.png" alt="" />
             <div class="line"></div>
           </div>
           <div class="content right">
-            <h3 class="timestamp">{{ item.timestamp }}</h3>
-            <div class="text">{{ item.content }}</div>
+            <h3 class="timestamp">{{ item.creatime }}</h3>
+            <div class="text">{{ item.title }}</div>
           </div>
         </li>
       </ul>
@@ -56,12 +56,9 @@
       <img src="~@/assets/img/shilong.png" class="mouth-selected-bg" alt="" />
       <h1 class="index-title">口碑精选</h1>
       <div class="fl jc-between selected-list">
-        <div class="item" v-for="item in 4" :key="item">
-          <div class="over-ellipsis selected-title">用户姓名</div>
-          <div class="selected-content">
-            师傅服务热情，周到，下雨
-            天搬家，我东西还多，师傅毫无怨言，真是辛苦了！超 级感谢
-          </div>
+        <div class="item" v-for="item in evaluate" :key="item.id">
+          <div class="over-ellipsis selected-title">{{item.name}}</div>
+          <div class="selected-content">{{item.detail}}</div>
         </div>
       </div>
     </div>
@@ -69,32 +66,45 @@
 </template>
 
 <script>
+  import { serviceIndex, serviceProject, serviceGroup, serviceEvaluate } from "@/api/api.js";
 export default {
   data() {
     return {
-      activities: [
-        {
-          content: "支持自定义颜色",
-          timestamp: "2018-04-03 20:46",
-        },
-        {
-          content: "支持自定义尺寸",
-          timestamp: "2018-04-03 20:46",
-        },
-        {
-          content: "默认样式的节点",
-          timestamp: "2018-04-03 20:46",
-        },
-        {
-          content: "默认样式的节点",
-          timestamp: "2018-04-03 20:46",
-        },
-        {
-          content: "默认样式的节点",
-          timestamp: "2018-04-03 20:46",
-        },
-      ],
+      list:[],
+      group: [],
+      evaluate: []
     };
+  },
+  created() {
+    this.getList();
+    this.getServiceProject();
+    this.getServiceGroup();
+    this.getServiceEvaluate();
+  },
+  methods: {
+    // 轮播
+    async getList() {
+      let { data } = await serviceIndex();
+      this.list = data;
+    },
+    async getServiceProject() {
+      let { data } = await serviceProject();
+
+      // console.log(data);
+    },
+    // 我们的成长
+    async getServiceGroup() {
+      let { data } = await serviceGroup();
+      this.group = data
+    },
+    // 评论
+    async getServiceEvaluate() {
+      let { data } = await serviceEvaluate();
+      this.evaluate = data
+      console.log(data);
+    },
+
+
   },
 };
 </script>
@@ -102,11 +112,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/style/variable.less";
 .index {
-  .banner {
-    width: 100%;
-  }
-
-  .my-project {
+   .my-project {
     width: @pageCenter;
     margin: 140px auto 35px auto;
     position: relative;

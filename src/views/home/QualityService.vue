@@ -1,11 +1,11 @@
 <template>
   <div class="quality-service">
     <h1 class="index-title">优质服务</h1>
-    <div class="fl jc-between">
+    <div class="fl jc-between" v-if="category.length">
       <div class="left-meau">
         <div class="fl jc-between left-top">
-          <div class="left-meau-left" v-for="(item, index) in category" :key="item.id">
-            <div class="item" :class="{'is-active': active == index}">{{item.name}}</div>
+          <div class="left-meau-left">
+            <div class="item" :class="{'is-active': active == index}"  v-for="(item, index) in category" :key="item.id" @click="changeActive(index)">{{item.name}}</div>
           </div>
           <div class="left-meau-scrool"></div>
         </div>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="content">{{category[active].detail}}</div>
+    <div class="content"  v-if="category.length">{{category[active].detail}}</div>
   </div>
 </template>
 
@@ -43,6 +43,9 @@ export default {
       let { data } = await homeCategory();
       this.category = data;
     },
+    changeActive(index){
+      this.active = index
+    }
   },
 };
 </script>
@@ -65,6 +68,7 @@ export default {
           font-size: 26px;
           font-weight: bold;
           color: #646464;
+          cursor: pointer;
           &:nth-of-type(1) {
             margin-top: 37px;
           }

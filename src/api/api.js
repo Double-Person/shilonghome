@@ -6,17 +6,21 @@ export const homeService = (params)=>getAction("/api/index/home_service",params)
 // 优质服务
 export const homeCategory = (params)=>getAction("/api/index/home_category",params);
 
+// 优质案例
+export const homeCase = (params)=>getAction("/api/index/home_case",params);
+//新闻
+export const homeNews = (params)=>getAction("/api/index/home_news",params);
+//新闻详情
+export const homeNewsDetail = (params)=>getAction("/api/index/news_detail",params);
+
 
 
 
 
 // 视频 
 export const homeVideo = (params)=>getAction("/api/index/home_video",params);
-//新闻 
-export const homeNews = (params)=>getAction("/api/index/homeNews",params);
 
-// 优质案例 
-export const homeCase = (params)=>getAction("/api/index/home_case",params);
+
 
 
 // 自如寓 
@@ -51,8 +55,13 @@ export const serviceProject = (params)=>getAction("/api/service/service_project"
 
 
 // 企悦会接口
-// 轮播图 /api/company/index
-// GET 合作伙伴 /api/company/company_partner
-// GET 产品 /api/company/company_product
-// GET 会员 /api/company/company_user
-// GET 福利 /api/company/company_welfare
+// 轮播图
+export const companyIndex = (params)=>getAction("/api/company/index",params);
+// GET 合作伙伴
+export const companyPartner = (params)=>getAction("/api/company/company_partner",params);
+// GET 产品
+export const companyProduct = (params)=>getAction("/api/company/company_product",params);
+// GET 会员
+export const companyUser = (params)=>getAction("/api/company/company_user",params);
+// GET 福利
+export const companyWelfare = (params)=>getAction("/api/company/company_welfare",params);

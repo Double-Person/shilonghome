@@ -4,6 +4,7 @@
     <div class="fl jc-between content">
       <div class="left">
         <img
+                class="cover-img"
           src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
           alt=""
         />
@@ -15,36 +16,55 @@
       </div>
 
       <ul class="fl jc-between right">
-        <li v-for="item in 3" :key="item">
+        <li v-for="item in list" :key="item.id">
           <div class="top fl jc-between align-center">
-            <h2 class="title">新闻标题文字</h2>
+            <h2 class="title">{{item.title}}</h2>
             <i class="el-icon-right icon-info"></i>
           </div>
-          <div class="over-ellipsis-2 text">
-            文字文字文字文字文字文字文字文字文字文字文字文字文字
-            文字文字文字文字文字文文字文字文字
-          </div>
+          <div class="over-ellipsis-2 text" v-html="item.detail"></div>
         </li>
       </ul>
     </div>
   </div>
 </template>
 
+
+<script>
+  import { homeNews, homeNewsDetail } from "@/api/api.js";
+  export default {
+    data() {
+      return {
+        list: [],
+      };
+    },
+    created() {
+      this.getHomeNews();
+    },
+    methods: {
+      async getHomeNews() {
+        let { data } = await homeNews();
+        this.list = data;
+        console.log(data);
+      },
+
+    },
+  };
+</script>
+
 <style lang="less" scoped>
 @import "~@/assets/style/variable.less";
 .news {
   margin: 95px auto 57px auto;
   width: @pageCenter;
+  .index-title{
+    margin-bottom: 57px;
+  }
   .content {
     height: 411px;
     .left {
       width: 635px;
       position: relative;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+
       .info {
         text-align: center;
         position: absolute;
@@ -82,6 +102,7 @@
         .icon-info{
           font-size: 30px;
           font-weight: bold;
+          cursor: pointer;
         }
         }
 
@@ -90,6 +111,10 @@
           margin-top: 28px;
           color: #646464;
           line-height: 30px;
+         /deep/ p{
+
+           width: 100%;
+          }
         }
       }
     }
