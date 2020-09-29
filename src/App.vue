@@ -20,7 +20,7 @@
           @select="handleSelect"
         >
           <el-menu-item index="/"><div>首页</div></el-menu-item>
-          <el-menu-item index="/freely-combine"><div>自如寓</div></el-menu-item>
+          <el-menu-item index="/freely-combine"><div>世隆房管</div></el-menu-item>
           <el-menu-item index="/service"><div>服务</div></el-menu-item>
           <el-menu-item index="/qi-yue-will"><div>企悦会</div> </el-menu-item>
           <el-menu-item index="/join-us"> <div>加入我们</div> </el-menu-item>
