@@ -1,127 +1,144 @@
 <template>
-    <div class="home">
-        <el-carousel height="560px" :interval="4000">
-            <el-carousel-item v-for="item in bannerList" :key="item.id">
-                <img :src="$baseUrl + item.image" alt="" class="cover-img"/>
-            </el-carousel-item>
-        </el-carousel>
+  <div class="home">
+    <el-carousel height="560px" :interval="4000">
+      <el-carousel-item v-for="item in bannerList" :key="item.id">
+        <img :src="$baseUrl + item.image" alt="" class="cover-img" />
+      </el-carousel-item>
+    </el-carousel>
+    <!-- 服务项目 -->
+    <service-project />
+    <!-- 视频 -->
 
-        <!-- 服务项目 -->
-        <div class="service-project">
-            <h1 class="index-title">服务项目</h1>
-            <ul class="list fl jc-between">
-                <li class="item" v-for="item in serviceData" :key="item.id">
-                    <div class="img">
-                        <img
-                                class="cover-img"
-                                :src="$baseUrl + item.image"
-                                alt=""
-                        />
-                    </div>
-                    <div class="title over-ellipsis">{{item.title}}</div>
-                    <div class="sub-title over-ellipsis">{{item.subtitle}}</div>
-                </li>
-            </ul>
-        </div>
-
-        <!-- 视频 -->
-        <video-item></video-item>
-
-        <div class="bg-img">
-            <!-- 优质服务 -->
-            <quality-service></quality-service>
-
-            <!-- 优质案例 -->
-            <quality-case></quality-case>
-
-            <!-- 新闻动态 -->
-            <news></news>
-        </div>
+    <div class="video-warp" @click="playVideo">
+      <img
+        class="video-btn"
+        src="~@/assets/img/video-btn.png"
+        alt=""
+        @click="playVideo"
+      />
+      <video :src="$baseUrl + videos.vediofile" class="cover-img"></video>
     </div>
+
+    <div class="bg-img">
+      <!-- 优质服务 -->
+      <quality-service />
+      <!-- 优质案例 -->
+      <quality-case />
+      <!-- 新闻动态 -->
+      <news />
+    </div>
+    <comme-footer />
+    <!-- 视频播放蒙版 -->
+    <div
+      class="play-video-mask"
+      v-show="isShowMsk"
+      @click.stop.capture="isShowMsk = false"
+    >
+      <video
+        :src="$baseUrl + videos.vediofile"
+        class="cover-img-mask"
+        controls
+        ref="video"
+      ></video>
+    </div>
+  </div>
 </template>
 
 <script>
-    import {homeIndex, homeService} from "@/api/api.js";
-    import VideoItem from "@/views/home/VideoItem";
-    import QualityService from "@/views/home/QualityService";
-    import QualityCase from "@/views/home/QualityCase";
-    import News from "@/views/home/News";
+import { homeIndex, homeVideo } from "@/api/api.js";
+import ServiceProject from "@/views/home/ServiceProject";
+import QualityService from "@/views/home/QualityService";
+import QualityCase from "@/views/home/QualityCase";
+import News from "@/views/home/News";
+import CommeFooter from "@/components/CommeFooter";
 
-    export default {
-        name: "Index",
-        components: {
-            VideoItem,
-            QualityService,
-            QualityCase,
-            News,
-        },
-        data() {
-            return {
-                bannerList: [],
-                serviceData: []
-            };
-        },
-        created() {
-            this.getHomeIndex();
-            this.getHomeService();
-        },
-        methods: {
-            // 轮播
-            async getHomeIndex() {
-                let {data} = await homeIndex();
-                this.bannerList = data;
-            },
-            // 服务项目
-            async getHomeService() {
-                let {data} = await homeService();
-                this.serviceData = data
-
-            },
-        },
+export default {
+  name: "Index",
+  components: {
+    ServiceProject,
+    QualityService,
+    QualityCase,
+    News,
+    CommeFooter,
+  },
+  data() {
+    return {
+      isShowMsk: false,
+      bannerList: [],
+      serviceData: [],
+      videos: {},
     };
+  },
+  watch: {
+    isShowMsk(oldVal, newVal) {
+      if (oldVal) {
+        this.$refs.video.play();
+      } else {
+        this.$refs.video.pause();
+      }
+    },
+  },
+  created() {
+    this.getHomeIndex();
+    this.getVideo();
+  },
+  methods: {
+    // 轮播
+    async getHomeIndex() {
+      let { data } = await homeIndex();
+      this.bannerList = data;
+    },
+    async getVideo() {
+      let { data } = await homeVideo();
+      this.videos = data[0];
+    },
+    playVideo(type) {
+      this.isShowMsk = true;
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-    @import "~@/assets/style/variable.less";
-    // 服务项目
-    .service-project {
-        width: @pageCenter;
-        margin: 0 auto;
+@import "~@/assets/style/variable.less";
+.video-warp {
+  margin-top: 86px;
+  width: 100%;
+  height: 525px;
+  position: relative;
+  .video-btn {
+    position: absolute;
+    z-index: 2;
+    bottom: 78px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 117px;
+    height: 167px;
+    cursor: pointer;
+  }
+}
 
-        h1 {
-            margin: 86px auto 48px auto;
-        }
-
-        .list {
-            width: 100%;
-
-            .item {
-                width: 265px;
-
-                .img {
-                    border-radius: 4px;
-                    height: 205px;
-                    overflow: hidden;
-                }
-
-                .title {
-                    font-size: 26px;
-                    font-weight: bold;
-                    color: #191f12;
-                    margin: 25px 0 13px 0;
-                }
-
-                .sub-title {
-                    font-size: 18px;
-                    font-weight: 400;
-                    color: #646464;
-                }
-            }
-        }
-    }
-
-    .bg-img {
-        background-image: url("~@/assets/img/index-bgc.png");
-        background-size: 93%;
-    }
+.play-video-mask {
+  background: rgba(190, 204, 224, 0.4);
+  //   background: pink;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 6;
+  .cover-img-mask {
+    width: 1161px;
+    // height: 774px;
+    position: relative;
+    z-index: 7;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.bg-img {
+  margin-top: 86px;
+  background-image: url("~@/assets/img/index-bgc.png");
+  background-size: 93%;
+}
 </style>

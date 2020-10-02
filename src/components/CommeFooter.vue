@@ -1,0 +1,152 @@
+<template>
+  <footer class="footer">
+    <div class="warp-menu">
+      <ul class="menu fl align-center">
+        <li v-for="(item, index) in menuList" :key="index">{{ item }}</li>
+      </ul>
+    </div>
+    <div class="web-info fl">
+      <div class="logo-img fl align-center">
+        <img class="logo" src="~@/assets/img/logo.png" alt="" />
+        <div>世隆房管</div>
+      </div>
+      <div class="introduce">
+        <div>天津创享信息科技有限公司 Copyright©2020 ziroom.com 版权所有</div>
+        <div>京公安网备 11010502035891号 津ICP备19002079号-2</div>
+        <div>
+          违法和不良信息举报电话：4001001111-9
+          违法和不良信息举报邮箱：jubao@ziroom.com
+        </div>
+      </div>
+    </div>
+
+    <div class="download">
+      <div class="download-warp">
+        <div class="title">扫描下载APP</div>
+        <div class="code-warp">
+          <div v-for="item in codes" :key="item.id" class="code-list">
+            <img :src="$baseUrl + item.image" alt="" class="code-img" />
+            <div class="code-title">{{ item.title }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script>
+import { appCode } from "@/api/api.js";
+export default {
+  data() {
+    return {
+      menuList: ["世隆房管", "友情链接", "友情链接", "友情链接"],
+      codes: [],
+    };
+  },
+  created() {
+    this.getCode();
+  },
+  methods: {
+    // 二维码
+    async getCode() {
+      let { data } = await appCode();
+      this.codes = data;
+      console.log(data);
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+@import "~@/assets/style/variable.less";
+.footer {
+  width: 100%;
+
+  .warp-menu {
+    border-top: 2px solid @borderColor;
+    border-bottom: 2px solid @borderColor;
+    height: 94px;
+    .menu {
+      width: @pageCenter;
+      margin: 0 auto;
+      height: 100%;
+      li {
+        margin-right: 77px;
+        line-height: 100%;
+        font-size: 24px;
+        color: #646464;
+      }
+    }
+  }
+
+  .web-info {
+    justify-content: baseline;
+    width: @pageCenter;
+    margin: 53px auto 101px auto;
+    .logo-img {
+      height: 41px;
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+      div {
+        font-size: 31px;
+        font-family: FZTanHeiS-B-GB;
+        font-weight: 400;
+        color: #646464;
+        margin: 0 34px 0 23px;
+      }
+    }
+    .introduce {
+      font-size: 18px;
+      color: #646464;
+      height: 80px;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+  }
+
+  .download {
+    height: 148px;
+    background: #ffffff;
+
+    box-shadow: 0px 0px 16px 0px rgba(162, 162, 162, 0.56);
+    .download-warp {
+      position: relative;
+      width: @pageCenter;
+      margin: 0 auto;
+      .title {
+        font-size: 37px;
+        font-weight: 800;
+        color: #192013;
+        line-height: 148px;
+      }
+
+      .code-warp {
+        position: absolute;
+        left: 255px;
+        bottom: 0;
+        height: 200px;
+
+        .code-list {
+          height: 200px;
+          margin-right: 28px;
+          .code-img {
+            vertical-align: middle;
+            width: 150px;
+            height: 150px;
+            box-shadow: 0px 0px 16px 0px rgba(162, 162, 162, 0.56);
+          }
+          .code-title {
+            font-size: 24px;
+            color: #646464;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

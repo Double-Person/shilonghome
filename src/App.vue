@@ -66,7 +66,6 @@ export default {
     async getCode() {
       let { data } = await appCode();
       this.codes = data;
-      console.log(data);
     },
   },
 };

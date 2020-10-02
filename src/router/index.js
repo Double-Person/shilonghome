@@ -11,6 +11,11 @@ const routes = [
     component: Index
   },
   {
+    path: '/service-project-detail/:id',  // 首页服务项目详情
+    name: 'ServiceProjectDetail',
+    component: () => import('../views/home/ServiceProjectDetail.vue')
+  },
+  {
     path: '/freely-combine',  // 自如寓
     name: 'Index',
     component: () => import('../views/freelyCombine/index.vue')
