@@ -2,7 +2,7 @@
   <div class="index">
     <el-carousel height="560px" :interval="4000">
       <el-carousel-item v-for="item in list" :key="item.id">
-        <img :src="$baseUrl + item.image" alt="" class="cover-img"/>
+        <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
     </el-carousel>
 
@@ -11,30 +11,24 @@
         <img src="~@/assets/img/shilong.png" alt="" />
       </div>
       <ul class="fl jc-between">
-        <li v-for="item in 3" :key="item">
-          <h1>我们的项目 {{ item }}</h1>
-          <div>项目名称介绍</div>
+        <li v-for="item in myProjet" :key="item.id">
+          <h1>{{ item.title }}</h1>
+          <div>{{ item.introduce }}</div>
         </li>
       </ul>
     </div>
+    <!-- 关键词 -->
     <div class="fl jc-between projrct-list">
-      <div class="projrct-list-item" v-for="item in 4" :key="item">
-        <img
-          src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-          alt=""
-        />
-        <div class="keywords">关键字 {{ item }}</div>
+      <div class="projrct-list-item" v-for="item in keywordList" :key="item.id">
+        <img :src="$baseUrl + item.image" alt="" />
+        <div class="over-ellipsis fl keywords">{{ item.name }}</div>
       </div>
     </div>
 
     <div class="our-growth">
       <h1 class="index-title">我们的成长</h1>
       <ul class="timer">
-        <li
-          class="fl jc-center"
-          v-for="(item, index) in group"
-          :key="index.id"
-        >
+        <li class="fl jc-center" v-for="(item, index) in group" :key="index.id">
           <div class="content left">
             <h3 class="timestamp">{{ item.creatime }}</h3>
             <div class="text">{{ item.title }}</div>
@@ -57,27 +51,42 @@
       <h1 class="index-title">口碑精选</h1>
       <div class="fl jc-between selected-list">
         <div class="item" v-for="item in evaluate" :key="item.id">
-          <div class="over-ellipsis selected-title">{{item.name}}</div>
-          <div class="selected-content">{{item.detail}}</div>
+          <div class="over-ellipsis selected-title">{{ item.name }}</div>
+          <div class="selected-content">{{ item.detail }}</div>
         </div>
       </div>
     </div>
+
+    <comme-footer :isShowDownloadCode="false"/>
   </div>
 </template>
 
 <script>
-  import { serviceIndex, serviceProject, serviceGroup, serviceEvaluate } from "@/api/api.js";
+import {
+  serviceIndex,
+  serviceProject,
+  serviceImport,
+  serviceGroup,
+  serviceEvaluate,
+} from "@/api/api.js";
+import CommeFooter from "@/components/CommeFooter";
 export default {
+  components: {
+    CommeFooter,
+  },
   data() {
     return {
-      list:[],
+      list: [],
       group: [],
-      evaluate: []
+      myProjet: [],
+      keywordList: [],
+      evaluate: [],
     };
   },
   created() {
     this.getList();
     this.getServiceProject();
+    this.getServiceImport();
     this.getServiceGroup();
     this.getServiceEvaluate();
   },
@@ -87,24 +96,27 @@ export default {
       let { data } = await serviceIndex();
       this.list = data;
     },
+    // 轮播下方 我的项目
     async getServiceProject() {
       let { data } = await serviceProject();
-
-      // console.log(data);
+      this.myProjet = data;
+      console.log("我的项目", data);
+    },
+    // 我的项目下方 关键词
+    async getServiceImport() {
+      let { data } = await serviceImport();
+      this.keywordList = data;
     },
     // 我们的成长
     async getServiceGroup() {
       let { data } = await serviceGroup();
-      this.group = data
+      this.group = data;
     },
     // 评论
     async getServiceEvaluate() {
       let { data } = await serviceEvaluate();
-      this.evaluate = data
-      console.log(data);
+      this.evaluate = data;
     },
-
-
   },
 };
 </script>
@@ -112,7 +124,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/style/variable.less";
 .index {
-   .my-project {
+  .my-project {
     width: @pageCenter;
     margin: 140px auto 35px auto;
     position: relative;
@@ -144,7 +156,8 @@ export default {
       // padding-bottom: 25%;
       img {
         width: 100%;
-        height: auto;
+        // height: auto;
+        min-height: 230px;
         object-fit: cover;
       }
       .keywords {
@@ -156,7 +169,6 @@ export default {
         background: rgba(255, 255, 255, 0.6);
 
         justify-content: center;
-        display: flex;
         align-items: center;
         font-size: 37px;
 
@@ -237,7 +249,7 @@ export default {
   // 口碑精选
   .mouth-selected {
     width: @pageCenter;
-    margin: 0 auto;
+    margin: 0 auto 127px auto;
     position: relative;
     .mouth-selected-bg {
       position: absolute;
@@ -261,16 +273,13 @@ export default {
         // padding: 28px 25px 31px 25px;
         .selected-title {
           font-size: 24px;
-
           color: #646464;
           line-height: 30px;
           padding: 28px 0 26px 25px;
         }
         .selected-content {
           padding: 0 25px;
-
           font-size: 18px;
-
           color: #646464;
           line-height: 30px;
         }

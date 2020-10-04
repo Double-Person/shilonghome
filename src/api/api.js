@@ -39,18 +39,28 @@ export const serviceEvaluate = (params)=>getAction("/api/service/service_evaluat
 export const serviceGroup = (params)=>getAction("/api/service/service_group",params);
 // GET 项目 
 export const serviceProject = (params)=>getAction("/api/service/service_project",params);
+// GET 关键词 
+export const serviceImport = (params)=>getAction("/api/service/service_import",params);
 
-
-
+ 
 // 加入我们接口
-// 轮播 /api/join/join_banner
+// 轮播 
+export const joinBanner = (params)=>getAction("/api/join/join_banner",params);
+// GET 招聘分类 
+export const joinRecruit = (params)=>getAction("/api/join/join_recruit",params);
+// GET 员工关怀 
+export const joinStaff = (params)=>getAction("/api/join/join_staff",params);
+// 活动 
+export const joinActivity = (params)=>getAction("/api/join/join_activity",params);
+// GET 文化 
+export const joinCulture = (params)=>getAction("/api/join/join_culture",params);
+// GET 团队 
+export const joinTeam = (params)=>getAction("/api/join/join_team",params);
+// GET 团队 
+export const joinSign = (params)=>getAction("/api/join/sign",params);
 
-// 活动 /api/join/join_activity
 
-// GET 工作 /api/join/join_culture
-// GET 招聘分类 /api/join/join_recruit
-// GET 员工关怀 /api/join/join_staff
-// GET 团队 /api/join/join_team
+
 
 
 
@@ -65,3 +75,8 @@ export const companyProduct = (params)=>getAction("/api/company/company_product"
 export const companyUser = (params)=>getAction("/api/company/company_user",params);
 // GET 福利
 export const companyWelfare = (params)=>getAction("/api/company/company_welfare",params);
+
+
+
+// POST 文件上传
+export const uploadFile = (params)=>postAction("/api/common/upload",params);

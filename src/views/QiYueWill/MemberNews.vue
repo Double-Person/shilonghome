@@ -8,7 +8,7 @@
           <div class="time">{{ item.creatime }}</div>
         </div>
         <div class="title over-ellipsis">{{ item.title }}</div>
-        <div class="detail over-ellipsis-3">{{ item.detail }}</div>
+        <div class="over-ellipsis-3 detail">{{ item.detail }}</div>
       </li>
     </ul>
   </div>
@@ -39,7 +39,7 @@ export default {
 @import "~@/assets/style/variable.less";
 .member-news {
   width: @pageCenter;
-  margin: 0 auto;
+  margin: 0 auto 114px auto;
   .index-title {
     margin: 66px 0 80px 0;
   }
@@ -63,11 +63,14 @@ export default {
         color: #191f12;
         height: 61px;
         line-height: 61px;
+        border-bottom: 2px solid @borderColor;
       }
       .detail {
+        margin-top: 15px;
         font-size: 14px;
         color: #646464;
         line-height: 28px;
+        text-align: left;
       }
     }
   }

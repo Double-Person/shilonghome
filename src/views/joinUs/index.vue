@@ -1,62 +1,60 @@
 <template>
   <div class="index">
-    <img
-      src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-      class="banner"
-      alt=""
-    />
-
-    <div class="recruitment-position">
-      <h1 class="index-title">招聘岗位</h1>
-      <ul class="position-list fl jc-between">
-        <li class="item" v-for="item in 3" :key="item">
-          <img src="~@/assets/img/more.png" alt="" />
-        </li>
-        <li class="item">
-          <img src="~@/assets/img/more.png" alt="" />
+    <div class="banner-warp" v-if="menuList.length">
+      <img :src="$baseUrl + menuList[active].image" class="banner" alt="" />
+      <ul class="menu">
+        <li
+          class="menu-item"
+          v-for="(item, index) in menuList"
+          :key="item.id"
+          @click="changeMenu(index)"
+        >
+          <div>
+            <div style="display: inline-block">
+              <div>{{ item.name }}</div>
+              <span
+                class="border-bottom"
+                :style="{ opacity: active === index ? 1 : 0 }"
+              ></span>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
 
-    <div class="employee-care">
-      <h1 class="inswx-title">员工关怀</h1>
-      <div class="fl jc-between">
-        <div class="left icon">
-          <i class="el-icon-arrow-left icon-item"></i>
-        </div>
-        <ul class="img-list fl">
-          <li class="item" v-for="item in 8" :key="item">
-            <img src="~@/assets/img/more.png" alt="" />
-          </li>
-        </ul>
-        <div class="right icon">
-          <i class="el-icon-arrow-right icon-item"></i>
-        </div>
-      </div>
+    <div class="recruitment-position">
+      <h1 class="index-title">招聘岗位</h1>
+      <ul class="position-list fl jc-between">
+        <li class="item" v-for="item in joinRecruitList" :key="item.id">
+          {{ item.name }}
+          <!-- <img :src="$baseUrl + item.image" alt="" /> -->
+        </li>
+        <li class="item" @click="loadMore">
+          <img src="~@/assets/img/more.png" alt="" />
+        </li>
+      </ul>
     </div>
+    <!-- 员工关怀 -->
+    <employee-care />
     <!-- 公司活动展示 -->
     <div class="company-activities">
       <h1 class="index-title">公司活动展示</h1>
       <div class="fl jc-between list">
-        <div v-for="item in 4" :key="item" class="item">
-          <img
-            class="bg-img"
-            src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-            alt=""
-          />
+        <div v-for="item in joinActivityList" :key="item.id" class="item">
+          <img class="bg-img" :src="$baseUrl + item.image" alt="" />
           <div class="mask">
             <div class="icon">
               <i class="el-icon-d-arrow-right"></i>
             </div>
 
-            <div class="item-title">活动标题文字</div>
+            <div class="item-title">{{ item.title }}</div>
 
             <div class="item-content">
-              <div class="item-content-title">活动标题文字</div>
+              <div class="item-content-title">{{ item.title }}</div>
               <div class="line"></div>
 
               <div class="content-content">
-                福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字福利文字字福利文字
+                {{ item.detail }}
               </div>
             </div>
           </div>
@@ -66,12 +64,10 @@
 
     <div class="photo-list">
       <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" />
-      <ul class="img-list fl jc-between">
-        <li class="item" v-for="item in 8" :key="item">
-          <img
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            alt=""
-          />
+      <ul class="img-list fl">
+        <li class="item" v-for="(item, index) in joinCultureList" :key="index">
+          <img :src="$baseUrl + item.image" alt="" />
+          <div class="over-ellipsis text">{{ item.title }}</div>
         </li>
       </ul>
     </div>
@@ -80,23 +76,89 @@
       <div class="warp">
         <h1 class="index-title">我的团队</h1>
         <el-carousel :interval="4000" type="card" height="580px">
-          <el-carousel-item v-for="item in 6" :key="item">
-            <img
-      src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-      class="item-img"
-      alt=""
-    />
+          <el-carousel-item v-for="item in joinTeamList" :key="item.id">
+            <div class="team">
+              <img :src="$baseUrl + item.image" class="item-img" alt="" />
+              <div class="content">
+                <div class="over-ellipsis title">{{ item.title }}</div>
+                <div class="over-ellipsis-2 detail">{{ item.detail }}</div>
+              </div>
+            </div>
           </el-carousel-item>
         </el-carousel>
       </div>
     </div>
+
+    <comme-footer :isShowDownloadCode="false"/>
   </div>
 </template>
 
 <script>
+import {
+  joinBanner,
+  joinRecruit,
+  joinActivity,
+  joinCulture,
+  joinTeam,
+} from "@/api/api.js";
+import EmployeeCare from "@/views/joinUs/EmployeeCare";
+import CommeFooter from '@/components/CommeFooter';
 export default {
+  components: {
+    EmployeeCare,
+    CommeFooter
+  },
   data() {
-    return {};
+    return {
+      active: 0,
+      menuList: [],
+      joinRecruitList: [],
+      joinActivityList: [],
+      joinCultureList: [],
+      joinTeamList: [],
+    };
+  },
+  created() {
+    this.getMenuList();
+    this.getJoinRecruit();
+    this.getJoinActivity();
+    this.getJoinCulture();
+    this.getJoinTeam();
+  },
+  methods: {
+    loadMore() {
+this.$router.push('/recruit')
+    },
+    async getMenuList() {
+      let { data } = await joinBanner();
+      this.menuList = data;
+    },
+    changeMenu(index) {
+      this.active = index;
+    },
+
+    // 招聘岗位
+    async getJoinRecruit() {
+      let { data } = await joinRecruit();
+      this.joinRecruitList = data.slice(0, 3);
+    },
+
+    //  活动展示
+    async getJoinActivity() {
+      let { data } = await joinActivity();
+      this.joinActivityList = data;
+    },
+    // 文化
+    async getJoinCulture() {
+      let { data } = await joinCulture();
+      this.joinCultureList = data;
+    },
+
+    // 团队
+    async getJoinTeam() {
+      let { data } = await joinTeam();
+      this.joinTeamList = data;
+    },
   },
 };
 </script>
@@ -104,9 +166,34 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/style/variable.less";
 .index {
-  .banner {
-    width: 100%;
+  .banner-warp {
+    position: relative;
+    .banner {
+      width: 100%;
+    }
+    .menu {
+      width: @pageCenter;
+      margin: 0 auto;
+      position: absolute;
+      top: 135px;
+      left: calc((100% - @pageCenter) / 2);
+      z-index: 2;
+      font-size: 26px;
+      font-weight: bold;
+      color: #ffffff;
+      .menu-item {
+        margin-bottom: 37px;
+        cursor: pointer;
+        .border-bottom {
+          display: inline-block;
+          width: 100%;
+          height: 30px;
+          background: #01ac66;
+        }
+      }
+    }
   }
+
   /*招聘岗位*/
   .recruitment-position {
     width: @pageCenter;
@@ -115,37 +202,12 @@ export default {
       margin-top: 55px;
       padding-bottom: 85px;
       border-bottom: @borderColor 2px solid;
-    }
-  }
-  /*员工关怀*/
-  .employee-care {
-    width: @pageCenter;
-    margin: 72px auto 0 auto;
-    overflow: hidden;
-    padding-bottom: 97px;
-    border-bottom: @borderColor 2px solid;
-    .icon {
-      width: 54px;
-      line-height: 337px;
-      text-align: center;
-      .icon-item {
-        font-size: 40px;
-        font-weight: bold;
-      }
-    }
-    .img-list {
-      width: 1051px;
-      flex-wrap: wrap;
-      height: 337px;
-      overflow: hidden;
       .item {
-        width: 337px;
-        height: 337px;
-        flex: 1;
-        img {
-          width: 337px;
-          height: 337px;
-        }
+        width: 203px;
+        text-align: center;
+        line-height: 203px;
+        font-size: 26px;
+        cursor: pointer;
       }
     }
   }
@@ -153,6 +215,9 @@ export default {
   .company-activities {
     width: @pageCenter;
     margin: 70px auto 0 auto;
+    .index-title {
+      margin-bottom: 50px;
+    }
     .list {
       flex-wrap: wrap;
       .item {
@@ -178,6 +243,7 @@ export default {
 
           border-radius: 10px;
           transition: 1s linear;
+          overflow: hidden;
           &:hover {
             top: -109px;
           }
@@ -250,17 +316,29 @@ export default {
       .item {
         width: 25%;
         height: 291px;
-        
+        position: relative;
         img {
           width: 100%;
           height: 291px;
           vertical-align: middle;
+        }
+        .text {
+          width: 100%;
+          position: absolute;
+          z-index: 2;
+          top: 50%;
+          transform: translateY(-50%);
+          text-align: center;
+          font-size: 37px;
+          font-weight: 800;
+          color: #ffffff;
         }
       }
     }
   }
 
   .card-banner {
+    margin-bottom: 106px;
     .warp {
       width: @pageCenter;
       margin: 0 auto;
@@ -275,7 +353,30 @@ export default {
       object-fit: cover;
       margin: 0;
     }
+    .team {
+      position: relative;
+      width: 100%;
 
+      .content {
+        color: #fff;
+        text-align: center;
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        width: 436px;
+        height: 196px;
+        background: rgba(100, 100, 100, 0.8);
+        .title {
+          font-size: 26px;
+          font-weight: bold;
+          margin: 47px 0 31px 0;
+        }
+        .detail {
+          font-size: 18px;
+          line-height: 25px;
+        }
+      }
+    }
   }
 }
 </style>

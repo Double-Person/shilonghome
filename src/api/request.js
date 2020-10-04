@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import { Message } from 'element-ui';
 
 
 // 创建 axios 实例
@@ -12,6 +13,14 @@ const err = error => {
   if (error.response) {
     let data = error.response.data
     console.log('------异常响应------', error.response)
+    if(error.response.data.code !== 1) {
+      Message.closeAll()
+      Message({
+        message: error.response.data.msg || '请求失败请稍后后再试',
+        type: 'error',
+        duration: 3 * 1000
+      })
+    }
     switch (error.response.status) {
       case 403:
         // notification.error({ message: '系统提示', description: '拒绝访问', duration: 4 })

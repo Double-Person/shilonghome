@@ -5,7 +5,8 @@
         <li v-for="(item, index) in menuList" :key="index">{{ item }}</li>
       </ul>
     </div>
-    <div class="web-info fl">
+    <!-- margin: 53px auto 101px auto; -->
+    <div class="web-info fl" :style="{ 'margin-bottom': isShowDownloadCode ? '101px' : '74px' }">
       <div class="logo-img fl align-center">
         <img class="logo" src="~@/assets/img/logo.png" alt="" />
         <div>世隆房管</div>
@@ -20,7 +21,7 @@
       </div>
     </div>
 
-    <div class="download">
+    <div class="download" v-if="isShowDownloadCode">
       <div class="download-warp">
         <div class="title">扫描下载APP</div>
         <div class="code-warp">
@@ -37,6 +38,12 @@
 <script>
 import { appCode } from "@/api/api.js";
 export default {
+  props: {
+    isShowDownloadCode: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       menuList: ["世隆房管", "友情链接", "友情链接", "友情链接"],
@@ -51,7 +58,6 @@ export default {
     async getCode() {
       let { data } = await appCode();
       this.codes = data;
-      console.log(data);
     },
   },
 };

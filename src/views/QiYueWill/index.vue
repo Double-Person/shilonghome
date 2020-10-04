@@ -8,11 +8,11 @@
     <div class="platform-welfare">
       <h1 class="index-title">平台福利</h1>
       <div class="platform-welfare-list">
-        <img src="~@/assets/img/navicon-fwpzpz.png" alt="" />
-        <div class="fl jc-between list">
-          <div v-for="item in 4" :key="item" class="flex-1">
-            <div class="over-ellipsis title">福利一</div>
-            <div class="over-ellipsis content">文字文字文字文字文字文字</div>
+        <div class="fl list">
+          <div v-for="item in welfare" :key="item.id" class="item">
+            <img :src="$baseUrl + item.image" alt="" />
+            <div class="over-ellipsis title">{{ item.title }}</div>
+            <div class="over-ellipsis content">{{ item.detail }}</div>
           </div>
         </div>
       </div>
@@ -53,20 +53,25 @@
 
     <!-- 会员动态 -->
     <member-news></member-news>
+    <!-- 合作伙伴 -->
+    <cooperative-partner />
   </div>
 </template>
 
 <script>
-import { companyIndex, companyWelfare } from "@/api/api.js";
+import { companyIndex, companyProduct, companyWelfare } from "@/api/api.js";
 import MemberNews from "@/views/QiYueWill/MemberNews";
+import CooperativePartner from '@/views/QiYueWill/CooperativePartner'
 
 export default {
   components: {
     MemberNews,
+    CooperativePartner
   },
   data() {
     return {
       bannerList: [],
+      welfare: [],
       serviceData: [],
       active: 0,
     };
@@ -74,6 +79,8 @@ export default {
   created() {
     this.getIndex();
     this.getCompanyWelfare();
+
+    this.getCompanyProduct();
   },
   methods: {
     // 轮播
@@ -81,13 +88,18 @@ export default {
       let { data } = await companyIndex();
       this.bannerList = data;
     },
-    // 服务项目
+    //
+    //  平台福利
     async getCompanyWelfare() {
       let { data } = await companyWelfare();
-      this.serviceData = data;
-      console.log(data);
+      console.log("平台福利", data);
+      this.welfare = data;
     },
-
+    async getCompanyProduct() {
+      let { data } = await companyProduct();
+      this.serviceData = data.slice(0, 2);
+    },
+    // 服务项目
     changeActive(index) {
       this.active = index;
     },
@@ -116,7 +128,12 @@ export default {
 
     .list {
       text-align: center;
-
+      .item {
+        width: 25%;
+        img {
+          height: 139px;
+        }
+      }
       .title {
         font-size: 26px;
         font-weight: bold;
@@ -154,7 +171,7 @@ export default {
           color: #646464;
           cursor: pointer;
           &:nth-of-type(1) {
-            margin-top: 37px;
+            margin-top: 14px;
           }
           &:nth-of-type(2) {
             margin: 115px 0;
@@ -164,8 +181,6 @@ export default {
           color: #191f12;
           border-bottom: 10px solid rgb(0, 174, 102);
         }
-      }
-      .left-meau-scrool {
       }
     }
 
@@ -183,8 +198,8 @@ export default {
   }
 
   .right-img {
-    width: 832px;
-    height: 576px;
+    width: 790px;
+    height: 343px;
     box-shadow: 0px 0px 16px 0px rgba(208, 208, 208, 0.56);
     img {
       width: 100%;
