@@ -58,8 +58,8 @@ export const joinCulture = (params)=>getAction("/api/join/join_culture",params);
 export const joinTeam = (params)=>getAction("/api/join/join_team",params);
 // GET 团队 
 export const joinSign = (params)=>getAction("/api/join/sign",params);
-
-
+// GET 职位搜索 
+export const jonLike = (params)=>getAction("/api/join/jon_like",params);
 
 
 

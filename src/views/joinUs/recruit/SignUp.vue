@@ -104,8 +104,10 @@ export default {
   },
 
   methods: {
+    showForm() {
+      this.dialogFormVisible = true
+    },
     submitForm() {
-      console.log(this.form);
       this.form.resume = this.url;
       joinSign({ ...this.form }).then(({ code, msg }) => {
         if (code === 1) {

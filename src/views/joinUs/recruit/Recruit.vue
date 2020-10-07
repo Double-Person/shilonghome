@@ -5,7 +5,7 @@
         <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
     </el-carousel>
-    <div class="search-select">
+    <div class="fl jc-between search-select">
       <el-select v-model="select" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -17,20 +17,47 @@
       </el-select>
       <el-input
         placeholder="请输入内容"
-        v-model="searchValue"
+        v-model="name"
         class="input-with-select"
       >
-        <el-button slot="append">搜索</el-button>
+        <el-button slot="append" @click="searchInput">搜索</el-button>
       </el-input>
     </div>
 
-    <table-list />
-    <detail></detail>
+    <div class="list-search">
+      <div class="item fl align-center">
+        <div class="lable">类目一</div>
+
+        <el-radio-group v-model="listData.one">
+          <el-radio :label="3">备选项</el-radio>
+          <el-radio :label="6">备选项</el-radio>
+          <el-radio :label="9">备选项</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="item fl align-center">
+        <div class="lable">类目一</div>
+        <el-radio-group v-model="listData.one">
+          <el-radio :label="3">备选项</el-radio>
+          <el-radio :label="6">备选项</el-radio>
+          <el-radio :label="9">备选项</el-radio>
+        </el-radio-group>
+      </div>
+    </div>
+
+    <table-list
+      v-show="isShowTable"
+      :searchList="searchList"
+      @clickInfo="clickInfo"
+    />
+    <detail v-show="!isShowTable" ref="detail" />
+
+    <comme-footer :isShowDownloadCode="false"></comme-footer>
   </div>
 </template>
 
 <script>
-import { appBanner, appCode } from "@/api/api.js";
+import CommeFooter from '@/components/CommeFooter'
+import { appBanner, appCode, jonLike } from "@/api/api.js";
 import TableList from "@/views/joinUs/recruit/TableList";
 import Detail from "@/views/joinUs/recruit/Detail";
 export default {
@@ -38,13 +65,19 @@ export default {
   components: {
     TableList,
     Detail,
+    CommeFooter
   },
 
   data() {
     return {
+      isShowTable: true,
       bannerList: [],
-      searchValue: "",
+      name: "", // 搜索框
+      searchList: [],
       select: "",
+      listData: {
+        one: "",
+      },
       options: [
         {
           value: "选项1",
@@ -59,6 +92,7 @@ export default {
   },
   created() {
     this.getBanner();
+    this.searchInput();
   },
   methods: {
     // 轮播
@@ -66,16 +100,46 @@ export default {
       let { data } = await appBanner();
       this.bannerList = data;
     },
+    // 搜索按钮
+    async searchInput() {
+      console.log(this.name);
+      let { data } = await jonLike({ name: this.name });
+      this.searchList = data;
+    },
+    clickInfo(val) {
+      
+      let arr = [val];
+      this.$refs.detail.getInfoData(arr);
+      this.isShowTable = false;
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+@import "~@/assets/style/variable.less";
 .search-select {
-  margin-top: 30px;
+  width: @pageCenter;
+  margin: 30px auto 0 auto;
+  // margin-top: 30px;
   text-align: center;
   .el-input-group {
-    width: 500px;
+    width: 884px;
+  }
+}
+
+.list-search {
+  width: @pageCenter;
+  margin: 30px auto 0 auto;
+  .item {
+    height: 50px;
+    .lable {
+      margin-right: 65px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #191f12;
+      line-height: 48px;
+    }
   }
 }
 </style>
