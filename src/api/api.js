@@ -1,4 +1,4 @@
-import { getAction,deleteAction,putAction,postAction} from '@/api/manage'
+import { getAction,deleteAction,putAction,postAction, upLoadFile} from '@/api/manage'
 // 首页轮播 
 export const homeIndex = (params)=>getAction("/api/index/index",params);
 // 服务项目  ------------
@@ -79,4 +79,4 @@ export const companyWelfare = (params)=>getAction("/api/company/company_welfare"
 
 
 // POST 文件上传
-export const uploadFile = (params)=>postAction("/api/common/upload",params);
+export const uploadFile = (params)=>upLoadFile("/api/common/upload",params);

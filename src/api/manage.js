@@ -63,4 +63,13 @@ export function downFile(url,parameter){
     responseType: 'blob'
   })
 }
+export function upLoadFile(url,parameter){
+  return axios({
+    url: url,
+    params: parameter,
+    data: parameter,
+    method:'post' ,
+    headers: {'Content-Type':'multipart/form-data'},
+  })
+}
 

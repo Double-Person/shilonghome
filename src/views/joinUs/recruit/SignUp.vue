@@ -65,8 +65,8 @@
             action
             :limit="1"
             :show-file-list="false"
-            :on-change="changeFile"
             :before-upload="beforeUpload"
+            :http-request="fileUpload"
           >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">
@@ -105,7 +105,7 @@ export default {
 
   methods: {
     showForm() {
-      this.dialogFormVisible = true
+      this.dialogFormVisible = true;
     },
     submitForm() {
       this.form.resume = this.url;
@@ -125,13 +125,22 @@ export default {
       this.dialogFormVisible = false;
     },
     beforeUpload(file) {
-      console.log("beforeUpload", file);
-      return false;
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isLt2M;
     },
-    changeFile(file, fileList) {
-      console.log("change", file, fileList);
-      uploadFile({ file }).then((res) => {
-        console.log(res);
+    fileUpload(file) {
+      let form = new FormData();
+      form.append("file", file.file);
+      uploadFile(form).then(({msg, data: {url}}) => {
+        console.log(url);
+        this.url = url;
+        this.$message({
+            message: msg,
+            type: "success",
+          });
       });
     },
   },

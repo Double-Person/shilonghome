@@ -109,7 +109,7 @@ export default {
   }
 }
 .sign-up-btn {
-  margin: 140px auto 0 auto;
+  margin: 140px auto 100px auto;
   width: 426px;
   height: 52px;
   line-height: 52px;

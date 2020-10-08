@@ -61,7 +61,7 @@ export default {
 @import "~@/assets/style/variable.less";
 .table {
   width: @pageCenter;
-  margin: 58px auto 0 auto;
+  margin: 58px auto 100px auto;
   /deep/ thead .is-leaf {
     background: #f4f4f4;
     font-size: 20px;

@@ -5,16 +5,8 @@
         <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
     </el-carousel>
-    <div class="fl jc-between search-select">
-      <el-select v-model="select" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
+    <div class="search-select">
+      
       <el-input
         placeholder="请输入内容"
         v-model="name"
@@ -24,25 +16,6 @@
       </el-input>
     </div>
 
-    <div class="list-search">
-      <div class="item fl align-center">
-        <div class="lable">类目一</div>
-
-        <el-radio-group v-model="listData.one">
-          <el-radio :label="3">备选项</el-radio>
-          <el-radio :label="6">备选项</el-radio>
-          <el-radio :label="9">备选项</el-radio>
-        </el-radio-group>
-      </div>
-      <div class="item fl align-center">
-        <div class="lable">类目一</div>
-        <el-radio-group v-model="listData.one">
-          <el-radio :label="3">备选项</el-radio>
-          <el-radio :label="6">备选项</el-radio>
-          <el-radio :label="9">备选项</el-radio>
-        </el-radio-group>
-      </div>
-    </div>
 
     <table-list
       v-show="isShowTable"
@@ -128,18 +101,5 @@ export default {
   }
 }
 
-.list-search {
-  width: @pageCenter;
-  margin: 30px auto 0 auto;
-  .item {
-    height: 50px;
-    .lable {
-      margin-right: 65px;
-      font-size: 26px;
-      font-weight: 800;
-      color: #191f12;
-      line-height: 48px;
-    }
-  }
-}
+
 </style>
