@@ -135,7 +135,6 @@ export default {
       let form = new FormData();
       form.append("file", file.file);
       uploadFile(form).then(({msg, data: {url}}) => {
-        console.log(url);
         this.url = url;
         this.$message({
             message: msg,

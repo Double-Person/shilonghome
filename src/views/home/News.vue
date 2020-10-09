@@ -1,123 +1,138 @@
 <template>
-  <div class="news">
-    <h1 class="index-title">新闻动态</h1>
-    <div class="fl jc-between content">
-      <div class="left">
-        <img
-                class="cover-img"
-          src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-          alt=""
-        />
+    <div class="news">
+        <h1 class="index-title">新闻动态</h1>
+        <div class="fl jc-between content">
+            <div class="left" v-if="list.length">
+                <img
+                        class="cover-img"
+                        :src="$baseUrl + list[active].image"
+                        alt=""
+                />
 
-        <div class="info">
-          <img src="~@/assets/img/info.png" alt="" />
-          <div class="text">查看详情</div>
+                <div class="info">
+                    <img src="~@/assets/img/info.png" alt=""/>
+                    <div class="text">查看详情</div>
+                </div>
+            </div>
+
+            <ul class="fl jc-between right" >
+                <li v-for="(item, index) in list" :key="item.id" @click="changeActive(index)">
+
+                    <h2 class="title">{{item.title}}</h2>
+
+                    <div class="over-ellipsis-2 text" v-html="item.detail"></div>
+                </li>
+            </ul>
         </div>
-      </div>
-
-      <ul class="fl jc-between right">
-        <li v-for="item in list" :key="item.id">
-          <div class="top fl jc-between align-center">
-            <h2 class="title">{{item.title}}</h2>
-            <i class="el-icon-right icon-info"></i>
-          </div>
-          <div class="over-ellipsis-2 text" v-html="item.detail"></div>
-        </li>
-      </ul>
     </div>
-  </div>
 </template>
 
 
 <script>
-  import { homeNews, homeNewsDetail } from "@/api/api.js";
-  export default {
-    data() {
-      return {
-        list: [],
-      };
-    },
-    created() {
-      this.getHomeNews();
-    },
-    methods: {
-      async getHomeNews() {
-        let { data } = await homeNews();
-        this.list = data;
-        console.log(data);
-      },
+    import {homeNews, homeNewsDetail} from "@/api/api.js";
 
-    },
-  };
+    export default {
+        data() {
+            return {
+                list: [],
+              active: 0
+            };
+        },
+        created() {
+            this.getHomeNews();
+        },
+        methods: {
+            async getHomeNews() {
+                let {data} = await homeNews();
+                this.list = data;
+                console.log(data);
+            },
+          changeActive(index){
+              this.active = index
+          }
+        },
+    };
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/style/variable.less";
-.news {
-  margin: 95px auto 57px auto;
-  width: @pageCenter;
-  .index-title{
-    margin-bottom: 57px;
-  }
-  .content {
-    height: 411px;
-    .left {
-      width: 635px;
-      position: relative;
+    @import "~@/assets/style/variable.less";
 
-      .info {
-        text-align: center;
-        position: absolute;
-        z-index: 2;
-        width: 112px;
-        height: 100%;
-        left: 0;
-        top: 0;
+    .news {
+        margin: 95px auto 57px auto;
+        width: @pageCenter;
 
-        background-color: rgba(1, 172, 102, 0.7);
-        img {
-          width: 37px;
-          height: 37px;
-          margin: 188px auto 18px auto;
-          vertical-align: middle;
+        .index-title {
+            margin-bottom: 57px;
         }
-        .text {
-          font-size: 18px;
 
-          color: #ffffff;
+        .content {
+            height: 411px;
+
+            .left {
+                width: 635px;
+                position: relative;
+
+                .info {
+                  cursor: pointer;
+                    text-align: center;
+                    position: absolute;
+                    z-index: 2;
+                    width: 112px;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+
+                    background-color: rgba(1, 172, 102, 0.7);
+
+                    img {
+                        width: 37px;
+                        height: 37px;
+                        margin: 188px auto 18px auto;
+                        vertical-align: middle;
+                    }
+
+                    .text {
+                        font-size: 18px;
+
+                        color: #ffffff;
+                    }
+                }
+            }
+
+            .right {
+                width: 467px;
+                flex-direction: column;
+
+                li {
+                    display: block;
+                  cursor: pointer;
+
+                    .title {
+                        font-size: 26px;
+                        font-weight: bold;
+                        color: #191f12;
+                    }
+
+                    .icon-info {
+                        font-size: 30px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+
+
+                    .text {
+                        font-size: 18px;
+                        margin-top: 28px;
+                        color: #646464;
+                        line-height: 30px;
+
+                        /deep/ p {
+
+                            width: 100%;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-    .right {
-      width: 467px;
-      flex-direction: column;
-      li {
-        display: block;
-        .top{
-          h2 {
-          font-size: 26px;
-          font-weight: bold;
-          color: #191f12;
-        }
-        .icon-info{
-          font-size: 30px;
-          font-weight: bold;
-          cursor: pointer;
-        }
-        }
-
-        .text {
-          font-size: 18px;
-          margin-top: 28px;
-          color: #646464;
-          line-height: 30px;
-         /deep/ p{
-
-           width: 100%;
-          }
-        }
-      }
-    }
-  }
-}
 </style>

@@ -2,12 +2,12 @@ module.exports = {
   devServer: {
     open: true,
     proxy: {
-      "/api": {
+      "/": {
         target: "http://housekeeper.hkzhtech.com",
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          "^/api": "",
+          "^/": "",
         },
       },
     },
