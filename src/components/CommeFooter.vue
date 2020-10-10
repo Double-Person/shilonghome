@@ -89,6 +89,7 @@ export default {
     justify-content: baseline;
     width: @pageCenter;
     margin: 53px auto 101px auto;
+    padding-bottom: 148px;
     .logo-img {
       height: 41px;
       .logo {
@@ -115,6 +116,11 @@ export default {
   .download {
     height: 148px;
     background: #ffffff;
+    position: fixed;
+    z-index: 8;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     box-shadow: 0px 0px 16px 0px rgba(162, 162, 162, 0.56);
     .download-warp {

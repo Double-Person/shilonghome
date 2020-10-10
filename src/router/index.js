@@ -16,6 +16,11 @@ const routes = [
     component: () => import('../views/home/ServiceProjectDetail.vue')
   },
   {
+    path: '/New-detail/:id',  // 首页新闻详情
+    name: 'NewDetail',
+    component: () => import('../views/home/NewDetail.vue')
+  },
+  {
     path: '/freely-combine',  // 自如寓
     name: 'Index',
     component: () => import('../views/freelyCombine/index.vue')

@@ -23,7 +23,7 @@
       <!-- 优质服务 -->
       <quality-service />
       <!-- 优质案例 -->
-      <quality-case />
+      <quality-case :propVideo="propVideo" />
       <!-- 新闻动态 -->
       <news />
     </div>
@@ -67,6 +67,7 @@ export default {
       bannerList: [],
       serviceData: [],
       videos: {},
+      propVideo: {}
     };
   },
   watch: {
@@ -91,6 +92,10 @@ export default {
     async getVideo() {
       let { data } = await homeVideo();
       this.videos = data[0];
+      if (data.length > 1) {
+        this.propVideo = data[1]
+      }
+
     },
     playVideo(type) {
       this.isShowMsk = true;

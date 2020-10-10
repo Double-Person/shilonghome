@@ -2,7 +2,7 @@
     <div class="news">
         <h1 class="index-title">新闻动态</h1>
         <div class="fl jc-between content">
-            <div class="left" v-if="list.length">
+            <div class="left" v-if="list.length" @click="detail(list[active].id)">
                 <img
                         class="cover-img"
                         :src="$baseUrl + list[active].image"
@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <ul class="fl jc-between right" >
+            <ul class="right">
                 <li v-for="(item, index) in list" :key="item.id" @click="changeActive(index)">
 
                     <h2 class="title">{{item.title}}</h2>
@@ -35,7 +35,7 @@
         data() {
             return {
                 list: [],
-              active: 0
+                active: 0
             };
         },
         created() {
@@ -45,11 +45,14 @@
             async getHomeNews() {
                 let {data} = await homeNews();
                 this.list = data;
-                console.log(data);
+
             },
-          changeActive(index){
-              this.active = index
-          }
+            changeActive(index) {
+                this.active = index
+            },
+            detail(id) {
+                this.$router.push('/New-detail/' + id)
+            }
         },
     };
 </script>
@@ -73,7 +76,7 @@
                 position: relative;
 
                 .info {
-                  cursor: pointer;
+                    cursor: pointer;
                     text-align: center;
                     position: absolute;
                     z-index: 2;
@@ -101,11 +104,17 @@
 
             .right {
                 width: 467px;
-                flex-direction: column;
+                height: 411px;
+                overflow: hidden;
 
                 li {
                     display: block;
-                  cursor: pointer;
+                    cursor: pointer;
+                    height: 120px;
+                    overflow: hidden;
+                    &:nth-of-type(2) {
+                        margin: 25px 0;
+                    }
 
                     .title {
                         font-size: 26px;
@@ -125,6 +134,10 @@
                         margin-top: 28px;
                         color: #646464;
                         line-height: 30px;
+                        max-height: 105px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
 
                         /deep/ p {
 

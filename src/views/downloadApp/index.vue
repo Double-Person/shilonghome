@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-carousel height="560px" :interval="4000">
+    <el-carousel height="100vh" :interval="4000">
       <el-carousel-item v-for="item in bannerList" :key="item.id">
         <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
