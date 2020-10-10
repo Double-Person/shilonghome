@@ -67,7 +67,6 @@
 
 <style lang="less" scoped>
     @import "~@/assets/style/variable.less";
-
     .quality-case {
         margin: 154px auto 81px auto;
 
