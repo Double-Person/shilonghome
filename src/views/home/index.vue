@@ -9,12 +9,12 @@
     <service-project />
     <!-- 视频 -->
 
-    <div class="video-warp" @click="playVideo">
+    <div class="video-warp" @click="playVideo(videos.vediofile)">
       <img
         class="video-btn"
         src="~@/assets/img/video-btn.png"
         alt=""
-        @click="playVideo"
+        @click="playVideo(videos.vediofile)"
       />
       <video :src="$baseUrl + videos.vediofile" class="cover-img"></video>
     </div>
@@ -23,7 +23,7 @@
       <!-- 优质服务 -->
       <quality-service />
       <!-- 优质案例 -->
-      <quality-case :propVideo="propVideo" />
+      <quality-case :propVideo="propVideo" @qualityCaseVideo="qualityCaseVideo" />
       <!-- 新闻动态 -->
       <news />
     </div>
@@ -35,7 +35,7 @@
       @click.stop.capture="isShowMsk = false"
     >
       <video
-        :src="$baseUrl + videos.vediofile"
+        :src="$baseUrl + finallyVideoUrl"
         class="cover-img-mask"
         controls
         ref="video"
@@ -67,7 +67,8 @@ export default {
       bannerList: [],
       serviceData: [],
       videos: {},
-      propVideo: {}
+      propVideo: {},
+      finallyVideoUrl: ''
     };
   },
   watch: {
@@ -97,9 +98,14 @@ export default {
       }
 
     },
-    playVideo(type) {
+    playVideo(url) {
       this.isShowMsk = true;
+      this.finallyVideoUrl = url
     },
+
+    qualityCaseVideo(url) {
+      this.playVideo(url)
+    }
   },
 };
 </script>
@@ -131,13 +137,17 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 6;
+  z-index: 8;
   .cover-img-mask {
-    width: 1161px;
+    // width: 1161px;
+    width: 80%;
+    max-height: 90vh;
     // height: 774px;
+    object-fit: cover;
     position: relative;
     z-index: 7;
     margin-left: 50%;
+    margin-top: 5vh;
     transform: translateX(-50%);
   }
 }
