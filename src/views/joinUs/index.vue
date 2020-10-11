@@ -26,8 +26,8 @@
       <h1 class="index-title">招聘岗位</h1>
       <ul class="position-list fl jc-between">
         <li class="item" v-for="item in joinRecruitList" :key="item.id">
-          {{ item.name }}
-          <!-- <img :src="$baseUrl + item.image" alt="" /> -->
+          <img :src="$baseUrl + item.image" alt="" />
+          <span>{{ item.name }}</span>
         </li>
         <li class="item" @click="loadMore">
           <img src="~@/assets/img/more.png" alt="" />
@@ -89,7 +89,7 @@
       </div>
     </div>
 
-    <comme-footer :isShowDownloadCode="false"/>
+    <comme-footer :isShowDownloadCode="false" />
   </div>
 </template>
 
@@ -102,11 +102,11 @@ import {
   joinTeam,
 } from "@/api/api.js";
 import EmployeeCare from "@/views/joinUs/EmployeeCare";
-import CommeFooter from '@/components/CommeFooter';
+import CommeFooter from "@/components/CommeFooter";
 export default {
   components: {
     EmployeeCare,
-    CommeFooter
+    CommeFooter,
   },
   data() {
     return {
@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     loadMore() {
-this.$router.push('/recruit')
+      this.$router.push("/recruit");
     },
     async getMenuList() {
       let { data } = await joinBanner();
@@ -208,6 +208,23 @@ this.$router.push('/recruit')
         line-height: 203px;
         font-size: 26px;
         cursor: pointer;
+        position: relative;
+        img {
+          height: 203px;
+          width: 203px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        span {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          // top: 50%;
+          z-index: 3;
+          font-size: 26px;
+          font-weight: 800;
+          color: #ffffff;
+        }
       }
     }
   }
