@@ -17,11 +17,13 @@
     >
       <el-table-column prop="name" label="职位名称" align="center">
       </el-table-column>
-      <el-table-column label="职位类别" align="center">
-        <template slot-scope="scope">
-          <div v-html="scope.row.operating_duty"></div>
-        </template>
+      <el-table-column prop="u_name" label="职位类别" align="center">
       </el-table-column>
+<!--      <el-table-column label="职位类别" align="center">-->
+<!--        <template slot-scope="scope">-->
+<!--          <div v-html="scope.row.operating_duty"></div>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column prop="address" label="工作地点" align="center">
       </el-table-column>
       <el-table-column prop="num" label="招聘人数" align="center">
@@ -45,7 +47,6 @@
     </el-table>
 
     <div class="pag">
-      {{ total }}
       <el-pagination
         layout="prev, pager, next"
         :total="total"
@@ -67,7 +68,7 @@ export default {
       name: "", // 搜索框
       searchList: [],
       showList: [],
-      pageSize: 1,
+      pageSize: 15,
       total: 0,
     };
   },
