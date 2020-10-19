@@ -2,7 +2,7 @@
   <div class="index">
     <div class="banner-warp" v-if="menuList.length">
       <img :src="$baseUrl + menuList[active].image" class="banner" alt="" />
-      <ul class="menu">
+      <ul class="menu" v-if="false">
         <li
           class="menu-item"
           v-for="(item, index) in menuList"
@@ -78,7 +78,7 @@
         <el-carousel :interval="4000" type="card" height="580px">
           <el-carousel-item v-for="item in joinTeamList" :key="item.id">
             <div class="team">
-              <img :src="$baseUrl + item.image" class="item-img" alt="" />
+              <img :src="item.image" class="item-img" alt="" />
               <div class="content">
                 <div class="over-ellipsis title">{{ item.title }}</div>
                 <div class="over-ellipsis-2 detail">{{ item.detail }}</div>

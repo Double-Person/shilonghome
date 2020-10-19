@@ -29,7 +29,6 @@ export default {
     async getList() {
       let { data } = await companyUser();
       this.memberNews = data;
-      console.log(data);
     },
   },
 };

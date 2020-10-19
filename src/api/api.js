@@ -75,6 +75,15 @@ export const companyProduct = (params)=>getAction("/company/company_product",par
 export const companyUser = (params)=>getAction("/company/company_user",params);
 // GET 福利
 export const companyWelfare = (params)=>getAction("/company/company_welfare",params);
+// GET 底部信息
+export const homeBottom = (params)=>getAction("/index/home_bottom",params);
+
+
+
+//GET 友情链接 /api
+export const homeHref = (params)=>getAction("/index/home_href",params);
+
+
 
 
 

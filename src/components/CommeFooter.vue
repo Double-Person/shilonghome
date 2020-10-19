@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="warp-menu">
       <ul class="menu fl align-center">
-        <li v-for="(item, index) in menuList" :key="index">{{ item }}</li>
+        <li v-for="(item, index) in menuList" :key="index" @click="network(item.href)">{{ item.name }}</li>
       </ul>
     </div>
     <!-- margin: 53px auto 101px auto; -->
@@ -12,11 +12,11 @@
         <div>世隆房管</div>
       </div>
       <div class="introduce">
-        <div>天津创享信息科技有限公司 Copyright©2020 ziroom.com 版权所有</div>
-        <div>京公安网备 11010502035891号 津ICP备19002079号-2</div>
+        <div>{{footerInfo.title}}</div>
+        <div>{{footerInfo.name }}</div>
         <div>
-          违法和不良信息举报电话：4001001111-9
-          违法和不良信息举报邮箱：jubao@ziroom.com
+          违法和不良信息举报电话：{{footerInfo.phone }}
+          违法和不良信息举报邮箱：{{footerInfo.email }}
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { appCode } from "@/api/api.js";
+import { appCode, homeHref, homeBottom } from "@/api/api.js";
 export default {
   props: {
     isShowDownloadCode: {
@@ -46,12 +46,15 @@ export default {
   },
   data() {
     return {
-      menuList: ["世隆房管", "友情链接", "友情链接", "友情链接"],
+      menuList: [],
       codes: [],
+      footerInfo: {}
     };
   },
   created() {
     this.getCode();
+    this.getMenuList();
+    this.getBottom();
   },
   methods: {
     // 二维码
@@ -59,6 +62,21 @@ export default {
       let { data } = await appCode();
       this.codes = data;
     },
+    async getMenuList() {
+      let { data } = await homeHref()
+      this.menuList = data
+    },
+   async getBottom() {
+      let { data } = await homeBottom()
+      this.footerInfo = data[0];
+   },
+    network(path) {
+      console.log(path);
+      let url = 'http://' + path
+      window.open(url, '_back')
+
+      // window.location.href = url
+    }
   },
 };
 </script>

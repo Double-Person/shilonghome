@@ -20,7 +20,8 @@
     <!-- 关键词 -->
     <div class="fl jc-between projrct-list">
       <div class="projrct-list-item" v-for="item in keywordList" :key="item.id">
-        <img :src="$baseUrl + item.image" alt="" />
+        <img :src="$baseUrl + item.image" alt="" v-if="item.image"/>
+        <img  v-if="!item.image" src="~@/assets/img/defaultImg.png" alt=""/>
         <div class="over-ellipsis fl keywords">{{ item.name }}</div>
       </div>
     </div>
@@ -100,12 +101,23 @@ export default {
     async getServiceProject() {
       let { data } = await serviceProject();
       this.myProjet = data;
-      console.log("我的项目", data);
+      while (this.myProjet.length < 3) {
+        this.myProjet.push({
+          title: '--',
+          introduce: '--',
+        })
+      }
     },
     // 我的项目下方 关键词
     async getServiceImport() {
       let { data } = await serviceImport();
       this.keywordList = data;
+      while (this.keywordList.length < 4) {
+        this.keywordList.push({
+          name: '--',
+          image: '',
+        })
+      }
     },
     // 我们的成长
     async getServiceGroup() {
@@ -152,12 +164,14 @@ export default {
     .projrct-list-item {
       position: relative;
       width: 25%;
+      /*height: calc( 100vw / 4 );*/
       // height: 0;
       // padding-bottom: 25%;
       img {
         width: 100%;
+        height: 100%;
         // height: auto;
-        min-height: 230px;
+        /*min-height: 230px;*/
         object-fit: cover;
       }
       .keywords {

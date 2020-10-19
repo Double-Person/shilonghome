@@ -4,10 +4,12 @@
         <div class="fl jc-between content">
             <div class="left" v-if="list.length" @click="detail(list[active].id)">
                 <img
+                        v-if="list[active].image"
                         class="cover-img"
                         :src="$baseUrl + list[active].image"
                         alt=""
                 />
+                <img v-if="!list[active].image" class="cover-img" src="~@/assets/img/defaultImg.png" alt=""/>
 
                 <div class="info">
                     <img src="~@/assets/img/info.png" alt=""/>
@@ -17,9 +19,7 @@
 
             <ul class="right">
                 <li v-for="(item, index) in list" :key="item.id" @click="changeActive(index)">
-
                     <h2 class="title">{{item.title}}</h2>
-
                     <div class="over-ellipsis-2 text" v-html="item.detail"></div>
                 </li>
             </ul>
@@ -45,12 +45,21 @@
             async getHomeNews() {
                 let {data} = await homeNews();
                 this.list = data;
+                while (this.list.length < 3) {
+                    this.list.push({
+                        image: '',
+                        subtitle: '副标题',
+                        title: '标题',
+                        detail: '<div></div>'
+                    })
+                }
 
             },
             changeActive(index) {
                 this.active = index
             },
             detail(id) {
+                if (id === undefined) return false;
                 this.$router.push('/New-detail/' + id)
             }
         },
@@ -112,6 +121,7 @@
                     cursor: pointer;
                     height: 120px;
                     overflow: hidden;
+
                     &:nth-of-type(2) {
                         margin: 25px 0;
                     }

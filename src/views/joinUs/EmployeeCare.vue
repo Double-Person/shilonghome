@@ -14,11 +14,12 @@
             :key="item.id"
             :id="'itemList' + index"
           >
-            <img :src="$baseUrl + item.image" alt="" />
+            <img :src="$baseUrl + item.image" v-if="item.image" alt="" />
+            <img src="~@/assets/img/defaultImg.png" v-if="!item.image" alt="" />
 
-            /> -->
+
             <div class="text-descrition">
-              <div class="title">{{ item.title }}</div>
+              <div class="over-ellipsis title">{{ item.title }}</div>
               <div class="over-ellipsis-2 desc">{{ item.detail }}</div>
             </div>
           </li>
@@ -64,6 +65,13 @@ export default {
     // 员工关怀  joinStaff
     async getJoinStaff() {
       let { data } = await joinStaff();
+      while (data.length < 3) {
+        data.push({
+          image: '',
+          detail: '',
+          title: ''
+        })
+      }
       this.joinStaffList = data.slice(0, 3);
     },
   },
@@ -122,7 +130,6 @@ export default {
           color: #fff;
           padding: 0 35px 0 14px;
           .title {
-            width: 103px;
             font-size: 26px;
             font-weight: bold;
             margin-bottom: 17px;

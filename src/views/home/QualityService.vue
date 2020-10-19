@@ -15,9 +15,11 @@
       </div>
       <div class="right-img">
         <img
+                v-if="category[active].image"
           :src="$baseUrl + category[active].image"
           alt=""
         />
+        <img  v-if="!category[active].image" src="~@/assets/img/defaultImg.png" alt=""/>
       </div>
     </div>
 
@@ -42,6 +44,12 @@ export default {
     async getHomeCategory() {
       let { data } = await homeCategory();
       this.category = data;
+      while (this.category.length < 3) {
+        this.category.push({
+          image: '',
+          name: '--'
+        })
+      }
     },
     changeActive(index){
       this.active = index

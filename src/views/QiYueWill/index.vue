@@ -10,7 +10,8 @@
       <div class="platform-welfare-list">
         <div class="fl list">
           <div v-for="item in welfare" :key="item.id" class="item">
-            <img :src="$baseUrl + item.image" alt="" />
+            <img :src="$baseUrl + item.image" alt="" v-if="item.image"/>
+            <img  v-if="!item.image" src="~@/assets/img/defaultImg.png" alt=""/>
             <div class="over-ellipsis title">{{ item.title }}</div>
             <div class="over-ellipsis content">{{ item.detail }}</div>
           </div>
@@ -92,8 +93,14 @@ export default {
     //  平台福利
     async getCompanyWelfare() {
       let { data } = await companyWelfare();
-      console.log("平台福利", data);
       this.welfare = data;
+      while (this.welfare.length < 4) {
+        this.welfare.push({
+          image: '',
+          detail: '',
+          title: ''
+        })
+      }
     },
     async getCompanyProduct() {
       let { data } = await companyProduct();
@@ -210,8 +217,9 @@ export default {
 
   .content {
     margin-top: 57px;
-    width: 832px;
-    margin-left: calc(@pageCenter - 832px);
+    /*width: 832px;*/
+    width: 790px;
+    margin-left: calc(@pageCenter - 790px);
     font-size: 18px;
     font-weight: 400;
     color: #646464;
