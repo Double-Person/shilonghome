@@ -4,7 +4,9 @@
 
     <div class="photo-list fl fl-warp">
       <div class="item" v-for="item in category" :key="item.id">
-        <img class="cover-img" :src="$baseUrl + item.image" alt="" />
+<!--        <img class="cover-img" :src="item.image ? ($baseUrl + item.image) :  '~@/assets/img/defaultImg.png'" alt="" />-->
+        <img class="cover-img" :src="$baseUrl + item.image" v-if="item.image" alt="" />
+        <img class="cover-img" src="~@/assets/img/defaultImg.png" v-if="!item.image" alt="" />
       </div>
       <div class="video-warp">
         <img
@@ -44,18 +46,17 @@ export default {
     // 优质服务
     async getHomeCase() {
       let { data } = await homeCase();
-    //   for (let i = 0; i < 8; i++) {
-    //     let obj = {
-    //       creatime: "1601281421",
-    //       detail: "长虹物业绵阳公司防水维修工程",
-    //       id: i,
-    //       image: "/uploads/20201009/d2e669c024e016a8d3dfc73bd0d35ff8.jpg",
-    //     };
-    //     this.category.push(obj);
-    //   }
-    //   this.category = this.category.slice(0, 8);
+      while (data.length < 8) {
+        data.push({
+          image: '',
+          creatime: "1601281421",
+          detail: "长虹物业绵阳公司防水维修工程",
+          id: Math.random(),
+        })
+      }
+
       this.category = data.slice(0,8);
-      
+
     },
     clickPlayBtn() {
         this.$emit('qualityCaseVideo', this.propVideo.vediofile)

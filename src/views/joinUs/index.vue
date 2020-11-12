@@ -157,7 +157,16 @@ export default {
     // 团队
     async getJoinTeam() {
       let { data } = await joinTeam();
+      console.log(data);
       this.joinTeamList = data;
+      while (this.joinTeamList.length < 3) {
+        this.joinTeamList.push({
+          image: require('../../assets/img/defaultImg.png'),
+          id: -1,
+          title: '标题',
+          detail: '详情'
+        })
+      }
     },
   },
 };

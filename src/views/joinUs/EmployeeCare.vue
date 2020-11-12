@@ -122,6 +122,7 @@ export default {
           width: 337px;
           height: 337px;
           vertical-align: middle;
+          object-fit: cover;
           border: none;
         }
         .text-descrition {

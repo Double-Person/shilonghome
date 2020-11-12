@@ -50,6 +50,8 @@ export default {
           name: '--'
         })
       }
+      this.category = this.category.splice(0, 3);
+      console.log(this.category)
     },
     changeActive(index){
       this.active = index
