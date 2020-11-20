@@ -39,9 +39,11 @@ export default {
   .cooperative-partner {
     width: @pageCenter;
     margin: 0 auto;
+    padding-top: 71px;
 
     .index-title {
-      padding: 71px 0 52px 0;
+      // padding: 71px 0 52px 0;
+      margin: 0 0 52px 0;
     }
 
     .list {

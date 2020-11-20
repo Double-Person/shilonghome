@@ -38,7 +38,8 @@
     <employee-care />
     <!-- 公司活动展示 -->
     <div class="company-activities">
-      <h1 class="index-title">公司活动展示</h1>
+      <!-- 展示 -->
+      <h1 class="index-title">公司活动</h1>
       <div class="fl jc-between list">
         <div v-for="item in joinActivityList" :key="item.id" class="item">
           <img class="bg-img" :src="$baseUrl + item.image" alt="" />

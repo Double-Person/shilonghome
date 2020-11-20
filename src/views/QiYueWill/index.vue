@@ -97,8 +97,8 @@ export default {
       while (this.welfare.length < 4) {
         this.welfare.push({
           image: '',
-          detail: '',
-          title: ''
+          detail: '--',
+          title: '--'
         })
       }
     },
@@ -125,7 +125,7 @@ export default {
   border-bottom: 2px solid #d6d6d6;
 
   h1 {
-    margin: 85px auto 130px auto;
+    margin: 60px auto 60px auto;
   }
 
   .platform-welfare-list {
@@ -173,7 +173,7 @@ export default {
       overflow-y: hidden;
       .left-meau-left {
         .item {
-          font-size: 26px;
+          font-size: 24px;
           font-weight: bold;
           color: #646464;
           cursor: pointer;

@@ -50,8 +50,29 @@
 }
 
 .index-title {
-  font-size: 37px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
   color: #191f12;
-  // color: pink;
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 41.5%;
+    // transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    background: url('~@/assets/img/title_bg1.png') no-repeat 50%;
+    background-size: 100%;
+  }
+  &::after{ 
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    background: url('~@/assets/img/title_bg2.png') no-repeat 50%;
+    background-size: 100%;
+  }
 }

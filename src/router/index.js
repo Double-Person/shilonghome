@@ -49,6 +49,10 @@ const routes = [
     path: '/download-app',  // APP下载
     name: 'Index',
     component: () => import('../views/downloadApp/index.vue')
+  },
+  {
+    path: '*',  // APP下载
+    redirect: '/'
   }
 ]
 

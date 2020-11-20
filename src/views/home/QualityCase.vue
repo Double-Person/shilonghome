@@ -77,7 +77,9 @@ export default {
 
   .video-warp {
     width: 40%;
-    height: 100%;
+    // height: 100%;
+    height: calc( 100vw / 5 );
+    overflow: hidden;
     position: relative;
     float: left;
 
@@ -87,8 +89,8 @@ export default {
       bottom: 78px;
       margin-left: 50%;
       transform: translateX(-50%);
-      width: 117px;
-      height: 167px;
+      width: 58.5px;
+      height: 83.5px;
       cursor: pointer;
     }
 

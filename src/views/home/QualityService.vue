@@ -5,25 +5,39 @@
       <div class="left-meau">
         <div class="fl jc-between left-top">
           <div class="left-meau-left">
-            <div class="item" :class="{'is-active': active == index}"  v-for="(item, index) in category" :key="item.id" @click="changeActive(index)">{{item.name}}</div>
+            <div
+              class="item"
+              :class="{ 'is-active': active == index }"
+              v-for="(item, index) in category"
+              :key="item.id"
+              @click="changeActive(index)"
+            >
+              {{ item.name }}
+            </div>
           </div>
           <div class="left-meau-scrool"></div>
         </div>
 
-        <div class="title">{{category[active].title}}</div>
-        <div class="sub-title">{{category[active].subtitle}}</div>
+        <div class="title">{{ category[active].title }}</div>
+        <div class="sub-title">{{ category[active].subtitle }}</div>
       </div>
       <div class="right-img">
         <img
-                v-if="category[active].image"
+          v-if="category[active].image"
           :src="$baseUrl + category[active].image"
           alt=""
         />
-        <img  v-if="!category[active].image" src="~@/assets/img/defaultImg.png" alt=""/>
+        <img
+          v-if="!category[active].image"
+          src="~@/assets/img/defaultImg.png"
+          alt=""
+        />
       </div>
     </div>
 
-    <div class="content"  v-if="category.length">{{category[active].detail}}</div>
+    <div class="content" v-if="category.length">
+      {{ category[active].detail }}
+    </div>
   </div>
 </template>
 
@@ -33,7 +47,7 @@ export default {
   data() {
     return {
       category: [],
-      active:0
+      active: 0,
     };
   },
   created() {
@@ -46,16 +60,16 @@ export default {
       this.category = data;
       while (this.category.length < 3) {
         this.category.push({
-          image: '',
-          name: '--'
-        })
+          image: "",
+          name: "--",
+        });
       }
       this.category = this.category.splice(0, 3);
-      console.log(this.category)
+      console.log(this.category);
     },
-    changeActive(index){
-      this.active = index
-    }
+    changeActive(index) {
+      this.active = index;
+    },
   },
 };
 </script>
@@ -75,8 +89,8 @@ export default {
       overflow-y: hidden;
       .left-meau-left {
         .item {
-          font-size: 26px;
-          font-weight: bold;
+          font-size: 24px;
+          font-weight: 400;
           color: #646464;
           cursor: pointer;
           &:nth-of-type(1) {
@@ -97,7 +111,7 @@ export default {
 
     .title {
       margin: 82px 0 23px 0;
-      font-size: 37px;
+      font-size: 30px;
       font-weight: 800;
       color: #191f12;
     }

@@ -57,8 +57,8 @@ export default {
         }
       }
       .title {
-        font-size: 26px;
-        font-weight: bold;
+        font-size: 24px;
+        font-weight: 500;
         color: #191f12;
         height: 61px;
         line-height: 61px;

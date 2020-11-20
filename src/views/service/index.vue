@@ -27,7 +27,7 @@
     </div>
 
     <div class="our-growth">
-      <h1 class="index-title">我们的成长</h1>
+      <h1 class="index-title">我们成长</h1>
       <ul class="timer">
         <li class="fl jc-center" v-for="(item, index) in group" :key="index.id">
           <div class="content left">
@@ -152,8 +152,10 @@ export default {
       }
     }
     li {
+      flex: 1;
+      text-align: center;
       h1 {
-        font-size: 37px;
+        font-size: 24px;
         font-weight: 800;
         color: #191f12;
         margin-bottom: 22px;
@@ -184,7 +186,7 @@ export default {
 
         justify-content: center;
         align-items: center;
-        font-size: 37px;
+        font-size: 27px;
 
         font-weight: 800;
         color: #191f12;

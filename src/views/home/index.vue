@@ -123,8 +123,8 @@ export default {
     bottom: 78px;
     margin-left: 50%;
     transform: translateX(-50%);
-    width: 117px;
-    height: 167px;
+    width: 59px;
+    height: 88px;
     cursor: pointer;
   }
 }
