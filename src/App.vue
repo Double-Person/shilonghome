@@ -5,10 +5,10 @@
         <div class="fl align-center logo-name-location">
           <img class="logo" src="~@/assets/img/logo.png" alt="" />
           <img class="logo-name" src="~@/assets/img/logo-name.png" alt="" />
-          <div class="location" @click="getLngLatLocation">
+          <!-- <div class="location" @click="getLngLatLocation">
             <i class="el-icon-location-outline"></i>
             <span class="text">{{ locationInfo.city + " " }} </span>
-          </div>
+          </div> -->
         </div>
         <el-menu
           :default-active="activeIndex"

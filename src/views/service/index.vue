@@ -6,7 +6,7 @@
       </el-carousel-item>
     </el-carousel>
 
-    <div class="my-project">
+    <!-- <div class="my-project">
       <div class="bg-img">
         <img src="~@/assets/img/shilong.png" alt="" />
       </div>
@@ -16,7 +16,7 @@
           <div>{{ item.introduce }}</div>
         </li>
       </ul>
-    </div>
+    </div> -->
     <!-- 关键词 -->
     <div class="fl jc-between projrct-list">
       <div class="projrct-list-item" v-for="item in keywordList" :key="item.id">
@@ -163,9 +163,10 @@ export default {
     }
   }
   .projrct-list {
+    margin-top: 120px;
     .projrct-list-item {
       position: relative;
-      width: 25%;
+      width: 22%;
       /*height: calc( 100vw / 4 );*/
       // height: 0;
       // padding-bottom: 25%;
@@ -179,14 +180,15 @@ export default {
       .keywords {
         position: absolute;
         top: 101px;
-        right: 82px;
+        right: 32px;
         bottom: 101px;
-        left: 82px;
+        left: 32px;
         background: rgba(255, 255, 255, 0.6);
 
         justify-content: center;
         align-items: center;
-        font-size: 27px;
+        font-size: 20px;
+        overflow: hidden;
 
         font-weight: 800;
         color: #191f12;
@@ -205,7 +207,7 @@ export default {
       li {
         .content {
           .timestamp {
-            font-size: 28px;
+            font-size: 24px;
 
             font-weight: 800;
             color: #191f12;
@@ -213,7 +215,7 @@ export default {
           }
           .text {
             margin-top: 25px;
-            font-size: 18px;
+            font-size: 15px;
             color: #646464;
             line-height: 30px;
           }

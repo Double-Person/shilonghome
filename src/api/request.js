@@ -12,7 +12,6 @@ const service = axios.create({
 const err = error => {
   if (error.response) {
     let data = error.response.data
-    console.log('------异常响应------', error.response)
     if(error.response.data.code !== 1) {
       Message.closeAll()
       Message({

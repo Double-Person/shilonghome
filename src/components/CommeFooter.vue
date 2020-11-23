@@ -132,7 +132,7 @@ export default {
   }
 
   .download {
-    height: 148px;
+    height: 130px;
     background: #ffffff;
     position: fixed;
     z-index: 8;
@@ -146,33 +146,33 @@ export default {
       width: @pageCenter;
       margin: 0 auto;
       .title {
-        font-size: 37px;
-        font-weight: 800;
+        font-size: 24px;
+        font-weight: 500;
         color: #192013;
         line-height: 148px;
       }
 
       .code-warp {
         position: absolute;
-        left: 255px;
+        left: 175px;
         bottom: 0;
-        height: 200px;
+        height: 125px;
 
         .code-list {
-          height: 200px;
+          height: 125px;
           margin-right: 28px;
           .code-img {
             vertical-align: middle;
-            width: 150px;
-            height: 150px;
+            width: 82px;
+            height: 82px;
             box-shadow: 0px 0px 16px 0px rgba(162, 162, 162, 0.56);
           }
           .code-title {
-            font-size: 24px;
+            font-size: 15px;
             color: #646464;
             text-align: center;
             height: 50px;
-            line-height: 50px;
+            line-height: 30px;
           }
         }
       }
