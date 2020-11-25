@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="download" v-if="isShowDownloadCode">
+    <div class="download" v-if="isShowDownloadCode" v-show="showDownLoad">
       <div class="download-warp">
         <div class="title">扫描下载APP</div>
         <div class="code-warp">
@@ -29,6 +29,10 @@
             <img :src="$baseUrl + item.image" alt="" class="code-img" />
             <div class="code-title">{{ item.title }}</div>
           </div>
+        </div>
+
+        <div class="close" @click="closeDownLoad">
+          <i class="el-icon-close"></i>
         </div>
       </div>
     </div>
@@ -48,7 +52,8 @@ export default {
     return {
       menuList: [],
       codes: [],
-      footerInfo: {}
+      footerInfo: {},
+      showDownLoad: true
     };
   },
   created() {
@@ -76,6 +81,10 @@ export default {
       window.open(url, '_back')
 
       // window.location.href = url
+    },
+
+    closeDownLoad() {
+      this.showDownLoad = false;
     }
   },
 };
@@ -145,6 +154,13 @@ export default {
       position: relative;
       width: @pageCenter;
       margin: 0 auto;
+
+      .close{
+        position: absolute;
+        top: 20px;
+        right: 0;
+        cursor: pointer;
+      }
       .title {
         font-size: 24px;
         font-weight: 500;
