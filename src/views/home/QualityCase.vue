@@ -1,5 +1,5 @@
 <template>
-  <div class="quality-case">
+  <div class="quality-case"  v-loading="loading">
     <h1 class="index-title">优质案例</h1>
 
     <div class="photo-list fl fl-warp">
@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       category: [],
+      loading: true
     };
   },
   created() {
@@ -46,11 +47,12 @@ export default {
     // 优质服务
     async getHomeCase() {
       let { data } = await homeCase();
+      this.loading = false;
       while (data.length < 8) {
         data.push({
           image: '',
           creatime: "1601281421",
-          detail: "长虹物业绵阳公司防水维修工程",
+          detail: "--",
           id: Math.random(),
         })
       }

@@ -108,6 +108,7 @@ export default {
         line-height: 100%;
         font-size: 24px;
         color: #646464;
+        cursor: pointer;
       }
     }
   }

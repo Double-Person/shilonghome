@@ -74,8 +74,7 @@ export default {
 
   created() {
     this.getCode();
-    this.getLngLatLocation();
-    //
+    // this.getLngLatLocation();
   },
   methods: {
     handleSelect(key, keyPath) {

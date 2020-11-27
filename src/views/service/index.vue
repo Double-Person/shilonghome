@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <el-carousel height="560px" :interval="4000">
+    <el-carousel height="560px" :interval="4000" v-loading="loadingCarousel">
       <el-carousel-item v-for="item in list" :key="item.id">
         <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
@@ -18,7 +18,7 @@
       </ul>
     </div> -->
     <!-- 关键词 -->
-    <div class="fl jc-between projrct-list">
+    <div class="fl jc-between projrct-list" v-loading="loadingKeyword">
       <div class="projrct-list-item" v-for="item in keywordList" :key="item.id">
         <img :src="$baseUrl + item.image" alt="" v-if="item.image"/>
         <img  v-if="!item.image" src="~@/assets/img/defaultImg.png" alt=""/>
@@ -26,8 +26,8 @@
       </div>
     </div>
 
-    <div class="our-growth">
-      <h1 class="index-title">我们成长</h1>
+    <div class="our-growth" v-loading="loadingGrowth">
+      <h1 class="index-title">我的成长</h1>
       <ul class="timer">
         <li class="fl jc-center" v-for="(item, index) in group" :key="index.id">
           <div class="content left">
@@ -47,8 +47,8 @@
     </div>
 
     <!-- 口碑精选 -->
-    <div class="mouth-selected">
-      <img src="~@/assets/img/shilong.png" class="mouth-selected-bg" alt="" />
+    <div class="mouth-selected" v-loading="loadingMouth">
+      <!-- <img src="~@/assets/img/shilong.png" class="mouth-selected-bg" alt="" /> -->
       <h1 class="index-title">口碑精选</h1>
       <div class="fl jc-between selected-list">
         <div class="item" v-for="item in evaluate" :key="item.id">
@@ -82,6 +82,10 @@ export default {
       myProjet: [],
       keywordList: [],
       evaluate: [],
+      loadingCarousel: true,
+      loadingKeyword: true,
+      loadingGrowth: true,
+      loadingMouth: true
     };
   },
   created() {
@@ -96,6 +100,7 @@ export default {
     async getList() {
       let { data } = await serviceIndex();
       this.list = data;
+      this.loadingCarousel = false
     },
     // 轮播下方 我的项目
     async getServiceProject() {
@@ -112,6 +117,7 @@ export default {
     async getServiceImport() {
       let { data } = await serviceImport();
       this.keywordList = data;
+      this.loadingKeyword = false
       while (this.keywordList.length < 4) {
         this.keywordList.push({
           name: '--',
@@ -119,15 +125,18 @@ export default {
         })
       }
     },
-    // 我们的成长
+    // 我的成长
     async getServiceGroup() {
       let { data } = await serviceGroup();
+      this.loadingGrowth = false;
       this.group = data;
+
     },
     // 评论
     async getServiceEvaluate() {
       let { data } = await serviceEvaluate();
       this.evaluate = data;
+      this.loadingMouth = false
     },
   },
 };
@@ -179,16 +188,18 @@ export default {
       }
       .keywords {
         position: absolute;
-        top: 101px;
+        // top: 101px;
+        height: 80px;
         right: 32px;
-        bottom: 101px;
+        bottom: 50px;
         left: 32px;
         background: rgba(255, 255, 255, 0.6);
 
         justify-content: center;
         align-items: center;
-        font-size: 20px;
+        font-size: 25px;
         overflow: hidden;
+        border-radius: 5px;
 
         font-weight: 800;
         color: #191f12;

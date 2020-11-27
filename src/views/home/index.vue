@@ -9,7 +9,7 @@
     <service-project />
     <!-- 视频 -->
 
-    <div class="video-warp" @click="playVideo(videos.vediofile)">
+    <div class="video-warp" @click="playVideo(videos.vediofile)" v-loading="loadingVideo">
       <img
         class="video-btn"
         src="~@/assets/img/video-btn.png"
@@ -63,6 +63,7 @@ export default {
   },
   data() {
     return {
+      loadingVideo: true,
       isShowMsk: false,
       bannerList: [],
       serviceData: [],
@@ -93,6 +94,7 @@ export default {
     async getVideo() {
       let { data } = await homeVideo();
       this.videos = data[0];
+      this.loadingVideo = false;
       if (data.length > 1) {
         this.propVideo = data[1]
       }
@@ -131,7 +133,6 @@ export default {
 
 .play-video-mask {
   background: rgba(190, 204, 224, 0.4);
-  //   background: pink;
   position: fixed;
   left: 0;
   right: 0;
@@ -153,7 +154,7 @@ export default {
 }
 .bg-img {
   margin-top: 86px;
-  background-image: url("~@/assets/img/index-bgc.png");
-  background-size: 93%;
+  // background-image: url("~@/assets/img/index-bgc.png");
+  // background-size: 93%;
 }
 </style>

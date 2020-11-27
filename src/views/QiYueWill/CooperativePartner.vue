@@ -1,5 +1,5 @@
 <template>
-  <div class="warp">
+  <div class="warp" v-loading="loading">
     <div class="cooperative-partner">
       <h1 class="index-title">合作伙伴</h1>
       <ul class="list fl fl-warp jc-between">
@@ -17,6 +17,7 @@ export default {
   data() {
     return {
       cooperative: [],
+      loading: true
     };
   },
   created() {
@@ -26,6 +27,7 @@ export default {
     async getList() {
       let { data } = await companyPartner();
       this.cooperative = data;
+      this.loading = false
     },
   },
 };

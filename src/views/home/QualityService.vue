@@ -15,7 +15,22 @@
               {{ item.name }}
             </div>
           </div>
-          <div class="left-meau-scrool"></div>
+          <div class="left-meau-scrool">
+            <i class="el-icon-caret-top" @click="direction('top')"></i>
+
+            <div class="warp">
+              <div
+                class="progress"
+                :style="{
+                  height:
+                    (active == 0 && '33%') ||
+                    (active == 1 && '66%') ||
+                    (active == 2 && '100%'),
+                }"
+              ></div>
+            </div>
+            <i class="el-icon-caret-bottom" @click="direction('bottom')"></i>
+          </div>
         </div>
 
         <div class="title">{{ category[active].title }}</div>
@@ -70,6 +85,14 @@ export default {
     changeActive(index) {
       this.active = index;
     },
+    direction(type) {
+      if(type == 'top') {
+        this.active <= 0 ? (this.active = 0) : (this.active --) 
+      }
+      if(type == 'bottom') {
+        this.active >= 3 ? (this.active = 3) : (this.active ++) 
+      }
+    }
   },
 };
 </script>
@@ -84,9 +107,15 @@ export default {
   }
 
   .left-meau {
+    width: 230px;
+
     .left-top {
       height: 381px;
       overflow-y: hidden;
+      display: flex;
+      justify-content: space-between;
+      width: 275px;
+     
       .left-meau-left {
         .item {
           font-size: 24px;
@@ -102,10 +131,32 @@ export default {
         }
         .is-active {
           color: #191f12;
-          border-bottom: 10px solid rgb(0, 174, 102);
+          border-bottom: 10px solid red;
         }
       }
       .left-meau-scrool {
+        height: 381px;
+        width: 60px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        i {
+          font-size: 30px;
+           margin: 20 auto;
+          // color: red;
+        }
+        .warp {
+          background: rgb(199, 199, 199);
+          width: 10px;
+          height: 300px;
+          border-radius: 10px;
+          .progress {
+            width: 10px;
+            border-radius: 10px;
+            background: rgb(76, 76, 76);
+          }
+        }
       }
     }
 

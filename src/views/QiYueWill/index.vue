@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-carousel height="560px" :interval="4000">
+    <el-carousel height="560px" :interval="4000" v-loading="loadingCarousel">
       <el-carousel-item v-for="item in bannerList" :key="item.id">
         <img :src="$baseUrl + item.image" alt="" class="cover-img" />
       </el-carousel-item>
     </el-carousel>
-    <div class="platform-welfare">
+    <div class="platform-welfare" v-loading="loadingWelfare">
       <h1 class="index-title">平台福利</h1>
       <div class="platform-welfare-list">
         <div class="fl list">
@@ -20,7 +20,7 @@
     </div>
 
     <!-- 产品展示 -->
-    <div class="product-display">
+    <div class="product-display" v-loading="loadingService">
       <h1 class="index-title">产品展示</h1>
       <div class="fl jc-between" v-if="serviceData.length">
         <div class="left-meau">
@@ -75,6 +75,9 @@ export default {
       welfare: [],
       serviceData: [],
       active: 0,
+      loadingCarousel: true,
+      loadingWelfare: true,  // 平台福利
+      loadingService: true, // 产品展示
     };
   },
   created() {
@@ -88,12 +91,14 @@ export default {
     async getIndex() {
       let { data } = await companyIndex();
       this.bannerList = data;
+      this.loadingCarousel = false
     },
     //
     //  平台福利
     async getCompanyWelfare() {
       let { data } = await companyWelfare();
       this.welfare = data;
+      this.loadingWelfare = false;
       while (this.welfare.length < 4) {
         this.welfare.push({
           image: '',
@@ -105,6 +110,7 @@ export default {
     async getCompanyProduct() {
       let { data } = await companyProduct();
       this.serviceData = data.slice(0, 2);
+      this.loadingService = false
     },
     // 服务项目
     changeActive(index) {

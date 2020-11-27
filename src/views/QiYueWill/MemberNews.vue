@@ -1,5 +1,5 @@
 <template>
-  <div class="member-news">
+  <div class="member-news" v-loading="loading">
     <h1 class="index-title">会员动态</h1>
     <ul class="fl jc-between list">
       <li class="item" v-for="item in memberNews" :key="item.id">
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       memberNews: [],
+      loading: true
     };
   },
   created() {
@@ -29,6 +30,7 @@ export default {
     async getList() {
       let { data } = await companyUser();
       this.memberNews = data;
+      this.loading = false
     },
   },
 };

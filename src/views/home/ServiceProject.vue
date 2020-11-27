@@ -1,5 +1,5 @@
 <template>
-  <div class="service-project">
+  <div class="service-project" v-loading="loading">
     <h1 class="index-title">服务项目</h1>
     <ul class="list fl jc-between">
       <li
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       serviceData: [],
+      loading: true
     };
   },
   created() {
@@ -48,6 +49,7 @@ export default {
     async getHomeService() {
       let { data } = await homeService();
       this.serviceData = data;
+      this.loading = false
 
       while (this.serviceData.length < 4) {
         this.serviceData.push({

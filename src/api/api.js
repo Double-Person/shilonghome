@@ -3,6 +3,11 @@ import { getAction,deleteAction,putAction,postAction, upLoadFile} from '@/api/ma
 export const homeIndex = (params)=>getAction("/index/index",params);
 // 服务项目  ------------
 export const homeService = (params)=>getAction("/index/home_service",params);
+// 服务项目详情
+export const serviceDetail = (params)=>getAction("/index/service_detail",params);
+
+
+
 // 优质服务
 export const homeCategory = (params)=>getAction("/index/home_category",params);
 

@@ -11,6 +11,7 @@
     </div>
     <el-table
       :data="showList"
+      v-loading="loading"
       style="width: 100%"
       className="test"
       header-align="center"
@@ -68,6 +69,7 @@ export default {
       name: "", // 搜索框
       searchList: [],
       showList: [],
+      loading: true,
       pageSize: 15,
       total: 0,
     };
@@ -81,9 +83,9 @@ export default {
     async searchInput() {
       let { data } = await jonLike({ name: this.name });
       this.searchList = data;
-      console.log(data);
       this.total = this.searchList.length;
       this.showList = this.searchList.slice(0, this.pageSize);
+      this.loading = false
     },
     handleClick(row) {
       this.$emit("clickInfo", row);

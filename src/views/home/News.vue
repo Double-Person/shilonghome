@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <div class="news" v-loading="loading">
     <h1 class="index-title">新闻动态</h1>
     <div class="fl jc-between content">
       <div class="left" v-if="list.length" @click="detail(list[active].id)">
@@ -45,6 +45,7 @@ export default {
     return {
       list: [],
       active: 0,
+      loading: true
     };
   },
   created() {
@@ -54,6 +55,7 @@ export default {
     async getHomeNews() {
       let { data } = await homeNews();
       this.list = data;
+      this.loading = false;
       while (this.list.length < 3) {
         this.list.push({
           image: "",

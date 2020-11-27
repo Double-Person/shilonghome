@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class="banner-warp" v-if="menuList.length">
+    <div class="banner-warp" v-if="menuList.length" v-loading="loadingBanner">
       <img :src="$baseUrl + menuList[active].image" class="banner" alt="" />
       <ul class="menu" v-if="false">
         <li
@@ -22,7 +22,7 @@
       </ul>
     </div>
 
-    <div class="recruitment-position">
+    <div class="recruitment-position" v-loading="loadingPosition">
       <h1 class="index-title">招聘岗位</h1>
       <ul class="position-list fl jc-between">
         <li class="item" v-for="item in joinRecruitList" :key="item.id">
@@ -37,7 +37,7 @@
     <!-- 员工关怀 -->
     <employee-care />
     <!-- 公司活动展示 -->
-    <div class="company-activities">
+    <div class="company-activities" v-loading="loadingActivity">
       <!-- 展示 -->
       <h1 class="index-title">公司活动</h1>
       <div class="fl jc-between list">
@@ -63,8 +63,10 @@
       </div>
     </div>
 
-    <div class="photo-list">
+    <div class="photo-list" v-loading="loadingCulture">
+      <!-- <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" /> -->
       <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" />
+      
       <ul class="img-list fl">
         <li class="item" v-for="(item, index) in joinCultureList" :key="index">
           <img :src="$baseUrl + item.image" alt="" />
@@ -74,7 +76,7 @@
     </div>
 
     <div class="card-banner">
-      <div class="warp">
+      <div class="warp" v-loading="loadingTeam">
         <h1 class="index-title">我的团队</h1>
         <el-carousel :interval="4000" type="card" height="580px">
           <el-carousel-item v-for="item in joinTeamList" :key="item.id">
@@ -117,6 +119,12 @@ export default {
       joinActivityList: [],
       joinCultureList: [],
       joinTeamList: [],
+      loadingBanner: true, // 轮播
+      loadingPosition: true, // 招聘岗位  
+      loadingActivity: true, // 公司活动
+      loadingCulture: true, // 公司活动
+      loadingTeam: true, // 我的团队
+      
     };
   },
   created() {
@@ -133,6 +141,7 @@ export default {
     async getMenuList() {
       let { data } = await joinBanner();
       this.menuList = data;
+      this.loadingBanner = false
     },
     changeMenu(index) {
       this.active = index;
@@ -142,17 +151,20 @@ export default {
     async getJoinRecruit() {
       let { data } = await joinRecruit();
       this.joinRecruitList = data.slice(0, 3);
+      this.loadingPosition = false
     },
 
     //  活动展示
     async getJoinActivity() {
       let { data } = await joinActivity();
       this.joinActivityList = data;
+      this.loadingActivity = false;
     },
     // 文化
     async getJoinCulture() {
       let { data } = await joinCulture();
       this.joinCultureList = data;
+      this.loadingCulture = false
     },
 
     // 团队
@@ -160,6 +172,7 @@ export default {
       let { data } = await joinTeam();
       console.log(data);
       this.joinTeamList = data;
+      this.loadingTeam = false;
       while (this.joinTeamList.length < 3) {
         this.joinTeamList.push({
           image: require('../../assets/img/defaultImg.png'),
