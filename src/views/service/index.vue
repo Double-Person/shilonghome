@@ -20,9 +20,19 @@
     <!-- 关键词 -->
     <div class="fl jc-between projrct-list" v-loading="loadingKeyword">
       <div class="projrct-list-item" v-for="item in keywordList" :key="item.id">
-        <img :src="$baseUrl + item.image" alt="" v-if="item.image"/>
-        <img  v-if="!item.image" src="~@/assets/img/defaultImg.png" alt=""/>
-        <div class="over-ellipsis fl keywords">{{ item.name }}</div>
+        <img :src="$baseUrl + item.image" alt="" v-if="item.image" />
+        <img v-if="!item.image" src="~@/assets/img/defaultImg.png" alt="" />
+
+        <el-popover
+          placement="top-start"
+          width="300"
+          trigger="hover"
+          :content="item.name"
+        >
+          <div slot="reference" class="over-ellipsis fl keywords">
+            {{ item.name }}
+          </div>
+        </el-popover>
       </div>
     </div>
 
@@ -52,13 +62,33 @@
       <h1 class="index-title">口碑精选</h1>
       <div class="fl jc-between selected-list">
         <div class="item" v-for="item in evaluate" :key="item.id">
-          <div class="over-ellipsis selected-title">{{ item.name }}</div>
-          <div class="selected-content">{{ item.detail }}</div>
+          
+           <el-popover
+            placement="top-start"
+            width="200"
+            trigger="hover"
+            :content="item.name"
+          >
+            <div slot="reference" class="over-ellipsis selected-title">
+              {{ item.name }}
+            </div>
+          </el-popover>
+
+          <el-popover
+            placement="top-start"
+            width="200"
+            trigger="hover"
+            :content="item.detail"
+          >
+            <div slot="reference" class="over-ellipsis-4 selected-content">
+              {{ item.detail }}
+            </div>
+          </el-popover>
         </div>
       </div>
     </div>
 
-    <comme-footer :isShowDownloadCode="false"/>
+    <comme-footer :isShowDownloadCode="false" />
   </div>
 </template>
 
@@ -85,7 +115,7 @@ export default {
       loadingCarousel: true,
       loadingKeyword: true,
       loadingGrowth: true,
-      loadingMouth: true
+      loadingMouth: true,
     };
   },
   created() {
@@ -100,7 +130,7 @@ export default {
     async getList() {
       let { data } = await serviceIndex();
       this.list = data;
-      this.loadingCarousel = false
+      this.loadingCarousel = false;
     },
     // 轮播下方 我的项目
     async getServiceProject() {
@@ -108,21 +138,22 @@ export default {
       this.myProjet = data;
       while (this.myProjet.length < 3) {
         this.myProjet.push({
-          title: '--',
-          introduce: '--',
-        })
+          title: "--",
+          introduce: "--",
+        });
       }
     },
     // 我的项目下方 关键词
     async getServiceImport() {
       let { data } = await serviceImport();
       this.keywordList = data;
-      this.loadingKeyword = false
+      console.log(this.keywordList);
+      this.loadingKeyword = false;
       while (this.keywordList.length < 4) {
         this.keywordList.push({
-          name: '--',
-          image: '',
-        })
+          name: "--",
+          image: "",
+        });
       }
     },
     // 我的成长
@@ -130,13 +161,12 @@ export default {
       let { data } = await serviceGroup();
       this.loadingGrowth = false;
       this.group = data;
-
     },
     // 评论
     async getServiceEvaluate() {
       let { data } = await serviceEvaluate();
       this.evaluate = data;
-      this.loadingMouth = false
+      this.loadingMouth = false;
     },
   },
 };

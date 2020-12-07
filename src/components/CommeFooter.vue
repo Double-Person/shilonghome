@@ -2,21 +2,32 @@
   <footer class="footer">
     <div class="warp-menu">
       <ul class="menu fl align-center">
-        <li v-for="(item, index) in menuList" :key="index" @click="network(item.href)">{{ item.name }}</li>
+        <li
+          v-for="(item, index) in menuList"
+          :key="index"
+          @click="network(item.href)"
+        >
+          {{ item.name }}
+        </li>
       </ul>
     </div>
     <!-- margin: 53px auto 101px auto; -->
-    <div class="web-info fl" :style="{ 'margin-bottom': isShowDownloadCode ? '101px' : '74px' }">
+    <div
+      class="web-info fl"
+      :style="{ 'margin-bottom': isShowDownloadCode ? '101px' : '74px' }"
+    >
       <div class="logo-img fl align-center">
         <img class="logo" src="~@/assets/img/logo.png" alt="" />
         <div>世隆房管</div>
       </div>
       <div class="introduce">
-        <div>{{footerInfo.title}}</div>
-        <div>{{footerInfo.name }}</div>
+        <div>{{ footerInfo.title }}</div>
+        <div>{{ footerInfo.name }}</div>
         <div>
-          违法和不良信息举报电话：{{footerInfo.phone }}
-          违法和不良信息举报邮箱：{{footerInfo.email }}
+          违法和不良信息举报电话：{{
+            footerInfo.phone
+          }}
+          违法和不良信息举报邮箱：{{ footerInfo.email }}
         </div>
       </div>
     </div>
@@ -24,7 +35,7 @@
     <div class="download" v-if="isShowDownloadCode" v-show="showDownLoad">
       <div class="download-warp">
         <div class="title">扫描下载APP</div>
-        <div class="code-warp">
+        <div class="fl code-warp">
           <div v-for="item in codes" :key="item.id" class="code-list">
             <img :src="$baseUrl + item.image" alt="" class="code-img" />
             <div class="code-title">{{ item.title }}</div>
@@ -45,15 +56,15 @@ export default {
   props: {
     isShowDownloadCode: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       menuList: [],
       codes: [],
       footerInfo: {},
-      showDownLoad: true
+      showDownLoad: true,
     };
   },
   created() {
@@ -68,24 +79,27 @@ export default {
       this.codes = data;
     },
     async getMenuList() {
-      let { data } = await homeHref()
-      this.menuList = data
+      let { data } = await homeHref();
+      this.menuList = data;
     },
-   async getBottom() {
-      let { data } = await homeBottom()
+    async getBottom() {
+      let { data } = await homeBottom();
       this.footerInfo = data[0];
-   },
+    },
     network(path) {
-      console.log(path);
-      let url = 'http://' + path
-      window.open(url, '_back')
+      if (path.startsWith("http")) {
+        let url = "http://" + path;
+        window.open(url, "_back");
+      } else {
+        window.open(path, "_back");
+      }
 
       // window.location.href = url
     },
 
     closeDownLoad() {
       this.showDownLoad = false;
-    }
+    },
   },
 };
 </script>
@@ -156,7 +170,7 @@ export default {
       width: @pageCenter;
       margin: 0 auto;
 
-      .close{
+      .close {
         position: absolute;
         top: 20px;
         right: 0;

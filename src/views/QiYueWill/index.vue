@@ -10,10 +10,20 @@
       <div class="platform-welfare-list">
         <div class="fl list">
           <div v-for="item in welfare" :key="item.id" class="item">
-            <img :src="$baseUrl + item.image" alt="" v-if="item.image"/>
-            <img  v-if="!item.image" src="~@/assets/img/defaultImg.png" alt=""/>
+            <img :src="$baseUrl + item.image" alt="" v-if="item.image" />
+            <img v-if="!item.image" src="~@/assets/img/defaultImg.png" alt="" />
             <div class="over-ellipsis title">{{ item.title }}</div>
-            <div class="over-ellipsis content">{{ item.detail }}</div>
+            >
+            <el-popover
+              placement="top-start"
+              width="200"
+              trigger="hover"
+              :content="item.detail"
+            >
+              <div slot="reference" class="over-ellipsis content">
+                {{ item.detail }}
+              </div>
+            </el-popover>
           </div>
         </div>
       </div>
@@ -62,12 +72,12 @@
 <script>
 import { companyIndex, companyProduct, companyWelfare } from "@/api/api.js";
 import MemberNews from "@/views/QiYueWill/MemberNews";
-import CooperativePartner from '@/views/QiYueWill/CooperativePartner'
+import CooperativePartner from "@/views/QiYueWill/CooperativePartner";
 
 export default {
   components: {
     MemberNews,
-    CooperativePartner
+    CooperativePartner,
   },
   data() {
     return {
@@ -76,7 +86,7 @@ export default {
       serviceData: [],
       active: 0,
       loadingCarousel: true,
-      loadingWelfare: true,  // 平台福利
+      loadingWelfare: true, // 平台福利
       loadingService: true, // 产品展示
     };
   },
@@ -91,7 +101,7 @@ export default {
     async getIndex() {
       let { data } = await companyIndex();
       this.bannerList = data;
-      this.loadingCarousel = false
+      this.loadingCarousel = false;
     },
     //
     //  平台福利
@@ -101,16 +111,16 @@ export default {
       this.loadingWelfare = false;
       while (this.welfare.length < 4) {
         this.welfare.push({
-          image: '',
-          detail: '--',
-          title: '--'
-        })
+          image: "",
+          detail: "--",
+          title: "--",
+        });
       }
     },
     async getCompanyProduct() {
       let { data } = await companyProduct();
       this.serviceData = data.slice(0, 2);
-      this.loadingService = false
+      this.loadingService = false;
     },
     // 服务项目
     changeActive(index) {
@@ -192,7 +202,8 @@ export default {
         }
         .is-active {
           color: #191f12;
-          border-bottom: 10px solid rgb(0, 174, 102);
+          // border-bottom: 10px solid rgb(0, 174, 102);
+          border-bottom: 10px solid red;
         }
       }
     }

@@ -66,7 +66,10 @@
     <div class="photo-list" v-loading="loadingCulture">
       <!-- <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" /> -->
       <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" />
-      
+
+      <div class="title-warp">
+        <h1 class="index-title">公司文化</h1>
+      </div>
       <ul class="img-list fl">
         <li class="item" v-for="(item, index) in joinCultureList" :key="index">
           <img :src="$baseUrl + item.image" alt="" />
@@ -120,11 +123,10 @@ export default {
       joinCultureList: [],
       joinTeamList: [],
       loadingBanner: true, // 轮播
-      loadingPosition: true, // 招聘岗位  
+      loadingPosition: true, // 招聘岗位
       loadingActivity: true, // 公司活动
       loadingCulture: true, // 公司活动
       loadingTeam: true, // 我的团队
-      
     };
   },
   created() {
@@ -141,7 +143,7 @@ export default {
     async getMenuList() {
       let { data } = await joinBanner();
       this.menuList = data;
-      this.loadingBanner = false
+      this.loadingBanner = false;
     },
     changeMenu(index) {
       this.active = index;
@@ -151,7 +153,7 @@ export default {
     async getJoinRecruit() {
       let { data } = await joinRecruit();
       this.joinRecruitList = data.slice(0, 3);
-      this.loadingPosition = false
+      this.loadingPosition = false;
     },
 
     //  活动展示
@@ -164,7 +166,7 @@ export default {
     async getJoinCulture() {
       let { data } = await joinCulture();
       this.joinCultureList = data;
-      this.loadingCulture = false
+      this.loadingCulture = false;
     },
 
     // 团队
@@ -175,11 +177,11 @@ export default {
       this.loadingTeam = false;
       while (this.joinTeamList.length < 3) {
         this.joinTeamList.push({
-          image: require('../../assets/img/defaultImg.png'),
+          image: require("../../assets/img/defaultImg.png"),
           id: -1,
-          title: '标题',
-          detail: '详情'
-        })
+          title: "标题",
+          detail: "详情",
+        });
       }
     },
   },
@@ -347,12 +349,25 @@ export default {
       top: 0;
       z-index: -1;
     }
+    .title-warp {
+      // padding-top: 283px;
+      padding-top: 138px;
+      .index-title {
+        
+        margin-top: 20px;
+        &::before{
+          left: 45.5%;
+        }
+      }
+    }
+
     .img-list {
       flex-wrap: wrap;
-
+      // padding-top: 283px;
+      padding-top: 23px;
       width: @pageCenter;
       margin: 0 auto;
-      padding-top: 283px;
+
       .item {
         width: 25%;
         height: 291px;
