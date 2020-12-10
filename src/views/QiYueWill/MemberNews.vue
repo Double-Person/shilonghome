@@ -7,8 +7,28 @@
           <i class="el-icon-location-outline icon"></i>
           <div class="time">{{ item.creatime }}</div>
         </div>
-        <div class="title over-ellipsis">{{ item.title }}</div>
-        <div class="over-ellipsis-3 detail">{{ item.detail }}</div>
+
+        <el-popover
+          placement="top-start"
+          width="220"
+          trigger="hover"
+          :content="item.title"
+        >
+          <div slot="reference" class="title over-ellipsis">
+            {{ item.title }}
+          </div>
+        </el-popover>
+
+        <el-popover
+          placement="top-start"
+          width="220"
+          trigger="hover"
+          :content="item.detail"
+        >
+          <div slot="reference" class="over-ellipsis-3 detail">
+            {{ item.detail }}
+          </div>
+        </el-popover>
       </li>
     </ul>
   </div>
@@ -20,7 +40,7 @@ export default {
   data() {
     return {
       memberNews: [],
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -30,7 +50,7 @@ export default {
     async getList() {
       let { data } = await companyUser();
       this.memberNews = data;
-      this.loading = false
+      this.loading = false;
     },
   },
 };

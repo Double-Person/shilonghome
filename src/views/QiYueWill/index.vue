@@ -13,7 +13,7 @@
             <img :src="$baseUrl + item.image" alt="" v-if="item.image" />
             <img v-if="!item.image" src="~@/assets/img/defaultImg.png" alt="" />
             <div class="over-ellipsis title">{{ item.title }}</div>
-            >
+            
             <el-popover
               placement="top-start"
               width="200"
