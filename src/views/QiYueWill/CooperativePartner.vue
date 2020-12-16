@@ -2,9 +2,16 @@
   <div class="warp" v-loading="loading">
     <div class="cooperative-partner">
       <h1 class="index-title">合作伙伴</h1>
+      <!--  -->
       <ul class="list fl fl-warp jc-between">
-        <li v-for="item in cooperative" :key="item.id" class="item">
-          <img :src="$baseUrl + item.image" alt="" class="cover-img" />
+        <li v-for="(item, index) in cooperative" :key="item.id" class="item">
+          <img
+            v-show="!errList.some((e) => e == index)"
+            :src="$baseUrl + item.image"
+            alt=""
+            class="cover-img"
+            @error="errList.push(index)"
+          />
         </li>
       </ul>
     </div>
@@ -17,7 +24,8 @@ export default {
   data() {
     return {
       cooperative: [],
-      loading: true
+      errList: [],
+      loading: true,
     };
   },
   created() {
@@ -27,7 +35,11 @@ export default {
     async getList() {
       let { data } = await companyPartner();
       this.cooperative = data;
-      this.loading = false
+      let less = 6 - (this.cooperative.length % 6);
+      this.loading = false;
+      if (less == 6) return false;
+      for (let i = 0; i < less; i++)
+        this.cooperative.push({ id: Math.random() });
     },
   },
 };
@@ -50,9 +62,13 @@ export default {
 
     .list {
       padding-bottom: 81px;
+      // justify-content: space-around;
       .item {
-        width: 263px;
-        height: 125px;
+        // width: 263px;  193
+        // height: 125px;
+        // width: calc(100% / 6);
+        width: 184px;
+        height: 87px;
         margin-bottom: 30px;
       }
     }

@@ -103,6 +103,21 @@ export default {
     playVideo(url) {
       this.isShowMsk = true;
       this.finallyVideoUrl = url
+      document.onmousewheel = (e) => {
+        console.log('-----')
+        var e = e || window.event;
+        if(e.wheelDelta && event.ctrlKey){
+            event.returnValue = false
+        }else if ( e && e.preventDefault ){
+            e.preventDefault();
+        }if(e.detail){
+            event.returnValue = false;
+        }
+
+      }
+      // document.onscroll = () => {
+      //   console.log('***********')
+      // }
     },
 
     qualityCaseVideo(url) {
@@ -135,21 +150,24 @@ export default {
   background: rgba(190, 204, 224, 0.4);
   position: fixed;
   left: 0;
-  right: 0;
+  // right: 0;
   top: 0;
-  bottom: 0;
+  // bottom: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 8;
   .cover-img-mask {
-    // width: 1161px;
-    width: 80%;
-    max-height: 90vh;
-    // height: 774px;
+    width: 1390px;
+    height: 522px;
     object-fit: cover;
     position: relative;
     z-index: 7;
-    margin-left: 50%;
-    margin-top: 5vh;
-    transform: translateX(-50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // margin-left: 50%;
+    // margin-top: 5vh;
+    // transform: translateX(-50%);
   }
 }
 .bg-img {

@@ -203,7 +203,7 @@ export default {
         .is-active {
           color: #191f12;
           // border-bottom: 10px solid rgb(0, 174, 102);
-          border-bottom: 10px solid red;
+          border-bottom: 10px solid rgb(255, 174, 59);
         }
       }
     }

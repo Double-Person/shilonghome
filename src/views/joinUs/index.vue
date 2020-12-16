@@ -65,7 +65,7 @@
 
     <div class="photo-list" v-loading="loadingCulture">
       <!-- <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" /> -->
-      <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" />
+      <!-- <img class="bg-img" src="~@/assets/img/join-us-bg.png" alt="" /> -->
 
       <div class="title-warp">
         <h1 class="index-title">公司文化</h1>
@@ -351,13 +351,16 @@ export default {
     }
     .title-warp {
       // padding-top: 283px;
-      padding-top: 138px;
+      // padding-top: 138px;
+      padding-top: 80px;
       .index-title {
-        
-        margin-top: 20px;
-        &::before{
-          left: 45.5%;
-        }
+        width: @pageCenter;
+        // margin-top: 20px;
+        margin: 20px auto 0 auto;
+        // &::before{
+        //   left: 42.5%;
+        //   // left: 45.5%;
+        // }
       }
     }
 
@@ -411,6 +414,9 @@ export default {
     .team {
       position: relative;
       width: 100%;
+      .item-img{
+        width: 100%;
+      }
 
       .content {
         color: #fff;
@@ -418,7 +424,9 @@ export default {
         position: absolute;
         z-index: 2;
         bottom: 0;
-        width: 436px;
+        // width: 436px;
+        width: 100%;
+        // el-carousel__item--card
         height: 196px;
         background: rgba(100, 100, 100, 0.8);
         .title {
@@ -429,6 +437,7 @@ export default {
         .detail {
           font-size: 18px;
           line-height: 25px;
+          padding: 0 30px;
         }
       }
     }
