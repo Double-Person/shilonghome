@@ -25,24 +25,25 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script>
-        document.addEventListener('keydown', function (event) {
-            const keyCodes = [61, 107, 173, 109, 187, 189];
-            let isIncludes = keyCodes.includes(event.keyCode)
+       
+        // document.addEventListener('keydown', function (event) {
+        //     const keyCodes = [61, 107, 173, 109, 187, 189];
+        //     let isIncludes = keyCodes.includes(event.keyCode)
 
-            if ((event.ctrlKey === true || event.metaKey === true) && isIncludes) {
-                event.preventDefault();
-            }
-        }, false);
+        //     if ((event.ctrlKey === true || event.metaKey === true) && isIncludes) {
+        //         event.preventDefault();
+        //     }
+        // }, false);
 
-        document.addEventListener('mousewheel', e => {
-            e = e || window.event;
-            if ((e.wheelDelta && event.ctrlKey) || e.detail) {
-                event.preventDefault();
-            }
-        }, {
-            capture: false,
-            passive: false
-        });
+        // document.addEventListener('mousewheel', e => {
+        //     e = e || window.event;
+        //     if ((e.wheelDelta && event.ctrlKey) || e.detail) {
+        //         event.preventDefault();
+        //     }
+        // }, {
+        //     capture: false,
+        //     passive: false
+        // });
 
     </script>
 </body>

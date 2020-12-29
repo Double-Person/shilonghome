@@ -2,8 +2,11 @@
   <div class="warp" v-loading="loading">
     <div class="cooperative-partner">
       <h1 class="index-title">合作伙伴</h1>
-      <!--  -->
-      <ul class="list fl fl-warp jc-between">
+      <!-- jc-around jc-between -->
+      <ul
+        class="list fl fl-warp"
+        :class="cooperative.length < 6 ? 'jc-around' : 'jc-between'"
+      >
         <li v-for="(item, index) in cooperative" :key="item.id" class="item">
           <img
             v-show="!errList.some((e) => e == index)"
@@ -35,11 +38,14 @@ export default {
     async getList() {
       let { data } = await companyPartner();
       this.cooperative = data;
-      let less = 6 - (this.cooperative.length % 6);
       this.loading = false;
-      if (less == 6) return false;
-      for (let i = 0; i < less; i++)
-        this.cooperative.push({ id: Math.random() });
+      if (this.cooperative.length > 6) {
+        let less = 6 - (this.cooperative.length % 6);
+        
+        if (less == 6) return false;
+        for (let i = 0; i < less; i++)
+          this.cooperative.push({ id: Math.random() });
+      }
     },
   },
 };
@@ -64,11 +70,8 @@ export default {
       padding-bottom: 81px;
       // justify-content: space-around;
       .item {
-        // width: 263px;  193
-        // height: 125px;
-        // width: calc(100% / 6);
-        width: 184px;
-        height: 87px;
+        width: 180px;
+        height: 70px;
         margin-bottom: 30px;
       }
     }

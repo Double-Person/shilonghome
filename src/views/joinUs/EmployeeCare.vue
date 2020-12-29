@@ -49,16 +49,17 @@ export default {
   },
   methods: {
     scrollView(direction) {
+      const widths = 382; // 355
       let ele = document.getElementById("itemList0");
       if (direction === "left") {
         if (this.marginLeft <= 0) return false;
-        this.marginLeft -= 355;
+        this.marginLeft -= widths;
         ele.style.marginLeft = `-${this.marginLeft}px`;
       } else {
         if (this.joinStaffList.length <= 3) return false;
-        if (this.marginLeft >= (this.joinStaffList.length - 3) * 355)
+        if (this.marginLeft >= (this.joinStaffList.length - 3) * widths)
           return false;
-        this.marginLeft += 355;
+        this.marginLeft += widths;
         ele.style.marginLeft = `-${this.marginLeft}px`;
       }
     },
@@ -107,20 +108,26 @@ export default {
     z-index: 0;
 
     height: 337px;
-    width: 1051px;
+    // width: 1051px;
+    width: calc( @pageCenter - 108px ); // 1092
     .img-list {
-      width: 1051px;
+      // width: 1051px;
+      width: calc( @pageCenter - 108px ); // 1092
       overflow: hidden;
       .item {
         display: inline-block;
-        width: 337px;
-        height: 337px;
+        width: calc( (@pageCenter - 108px) / 3 ); // 364px
+        height: calc( (@pageCenter - 108px) / 3 ); // 364px
+        // width: 337px;
+        // height: 337px;  /./ 355 - 337
         margin-right: 18px;
         position: relative;
 
         img {
-          width: 337px;
-          height: 337px;
+          // width: 337px;
+          // height: 337px;
+          width: calc( (@pageCenter - 108px) / 3 ); // 364px
+        height: calc( (@pageCenter - 108px) / 3 ); // 364px
           vertical-align: middle;
           object-fit: cover;
           border: none;

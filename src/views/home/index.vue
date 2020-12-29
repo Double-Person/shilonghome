@@ -16,7 +16,7 @@
         alt=""
         @click="playVideo(videos.vediofile)"
       />
-      <video :src="$baseUrl + videos.vediofile" class="cover-img"></video>
+      <video :src="$baseUrl + videos.vediofile" class="cover-img video-class"></video>
     </div>
 
     <div class="bg-img">
@@ -144,6 +144,9 @@ export default {
     height: 88px;
     cursor: pointer;
   }
+  .video-class{
+        object-fit: fill;
+  }
 }
 
 .play-video-mask {
@@ -159,7 +162,7 @@ export default {
   .cover-img-mask {
     width: 1390px;
     height: 522px;
-    object-fit: cover;
+    object-fit: fill;
     position: relative;
     z-index: 7;
     top: 50%;
