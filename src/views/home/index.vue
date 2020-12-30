@@ -103,18 +103,18 @@ export default {
     playVideo(url) {
       this.isShowMsk = true;
       this.finallyVideoUrl = url
-      document.onmousewheel = (e) => {
-        console.log('-----')
-        var e = e || window.event;
-        if(e.wheelDelta && event.ctrlKey){
-            event.returnValue = false
-        }else if ( e && e.preventDefault ){
-            e.preventDefault();
-        }if(e.detail){
-            event.returnValue = false;
-        }
+      // document.onmousewheel = (e) => {
+      //   console.log('-----')
+      //   var e = e || window.event;
+      //   if(e.wheelDelta && event.ctrlKey){
+      //       event.returnValue = false
+      //   }else if ( e && e.preventDefault ){
+      //       e.preventDefault();
+      //   }if(e.detail){
+      //       event.returnValue = false;
+      //   }
 
-      }
+      // }
       // document.onscroll = () => {
       //   console.log('***********')
       // }
